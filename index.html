@@ -134,6 +134,77 @@
             font-style: italic;
             opacity: 0.8;
         }
+
+        /* Advertisement Section */
+        .ads-section {
+            margin-top: 60px;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .ads-section h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            opacity: 0.9;
+        }
+
+        .ad-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .ad-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .ad-box:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .ad-box h4 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            color: #fff;
+        }
+
+        .ad-box p {
+            margin-bottom: 15px;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .ad-button {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            width: auto;
+        }
+
+        .ad-button:hover {
+            background: linear-gradient(45deg, #ff5252, #ff7979);
+            transform: scale(1.05);
+        }
+
+        .ad-disclaimer {
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0.7;
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
@@ -217,7 +288,74 @@
             <!-- Tax Calculator -->
             <div class="feature-card">
                 <h3>💼 Tax Calculator</h3>
-                <p class="coming-soon">Coming soon! Calculate taxes on international investments.</p>
+                <div class="input-group">
+                    <label for="taxCountry">Tax Residence:</label>
+                    <select id="taxCountry">
+                        <option value="SG">🇸🇬 Singapore</option>
+                        <option value="US">🇺🇸 United States</option>
+                        <option value="UK">🇬🇧 United Kingdom</option>
+                        <option value="AU">🇦🇺 Australia</option>
+                        <option value="CA">🇨🇦 Canada</option>
+                        <option value="DE">🇩🇪 Germany</option>
+                        <option value="FR">🇫🇷 France</option>
+                        <option value="NL">🇳🇱 Netherlands</option>
+                        <option value="CH">🇨🇭 Switzerland</option>
+                        <option value="JP">🇯🇵 Japan</option>
+                        <option value="HK">🇭🇰 Hong Kong</option>
+                        <option value="AE">🇦🇪 UAE</option>
+                        <option value="NZ">🇳🇿 New Zealand</option>
+                        <option value="IN">🇮🇳 India</option>
+                        <option value="MY">🇲🇾 Malaysia</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="investmentType">Investment Type:</label>
+                    <select id="investmentType">
+                        <option value="stocks">Stocks/Shares</option>
+                        <option value="dividends">Dividends</option>
+                        <option value="bonds">Bonds/Fixed Income</option>
+                        <option value="reit">REITs</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="capitalGain">Capital Gain/Loss (SGD):</label>
+                    <input type="number" id="capitalGain" placeholder="Enter gain/loss amount">
+                </div>
+                <div class="input-group">
+                    <label for="holdingPeriod">Holding Period (months):</label>
+                    <input type="number" id="holdingPeriod" placeholder="How long did you hold?">
+                </div>
+                <div class="input-group">
+                    <label for="withholdingTax">Withholding Tax Paid (%):</label>
+                    <input type="number" id="withholdingTax" placeholder="e.g., 30 for US stocks" step="0.1">
+                </div>
+                <button onclick="calculateTax()">Calculate Tax</button>
+                <div id="taxResult" class="result" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Advertisement Section -->
+        <div class="ads-section">
+            <h3>📢 Sponsored</h3>
+            <div class="ad-container">
+                <div class="ad-box">
+                    <h4>🏦 Best International Brokers</h4>
+                    <p>Compare fees and features for global investing</p>
+                    <button class="ad-button">Learn More</button>
+                </div>
+                <div class="ad-box">
+                    <h4>💳 Multi-Currency Cards</h4>
+                    <p>Save on forex fees with expat-friendly cards</p>
+                    <button class="ad-button">Get Started</button>
+                </div>
+                <div class="ad-box">
+                    <h4>📊 Tax Advisory Services</h4>
+                    <p>Expert tax help for international investors</p>
+                    <button class="ad-button">Book Consultation</button>
+                </div>
+            </div>
+            <div class="ad-disclaimer">
+                <small>* This is a demo advertisement section. Real ads would generate revenue through Google AdSense, affiliate partnerships, or sponsored content.</small>
             </div>
         </div>
     </div>
@@ -292,6 +430,73 @@
         // Update market hours every minute
         updateMarketHours();
         setInterval(updateMarketHours, 60000);
+
+        // Tax calculation function
+        function calculateTax() {
+            const country = document.getElementById('taxCountry').value;
+            const investmentType = document.getElementById('investmentType').value;
+            const capitalGain = parseFloat(document.getElementById('capitalGain').value);
+            const holdingPeriod = parseInt(document.getElementById('holdingPeriod').value);
+            const withholdingTax = parseFloat(document.getElementById('withholdingTax').value) || 0;
+            const resultDiv = document.getElementById('taxResult');
+
+            if (!capitalGain || !holdingPeriod) {
+                alert('Please enter capital gain and holding period');
+                return;
+            }
+
+            let taxRate = 0;
+            let taxInfo = '';
+            let finalTax = 0;
+
+            // Tax rates by country (simplified)
+            const taxRates = {
+                'SG': { rate: 0, info: 'Singapore: No capital gains tax for individual investors' },
+                'US': { rate: holdingPeriod >= 12 ? 0.15 : 0.22, info: holdingPeriod >= 12 ? 'US: Long-term capital gains (15%)' : 'US: Short-term capital gains (22%)' },
+                'UK': { rate: 0.10, info: 'UK: Capital gains tax (10% basic rate)' },
+                'AU': { rate: holdingPeriod >= 12 ? 0.225 : 0.45, info: holdingPeriod >= 12 ? 'Australia: CGT with 50% discount' : 'Australia: Full CGT rate' },
+                'CA': { rate: 0.25, info: 'Canada: 50% of capital gains taxable' },
+                'DE': { rate: 0.25, info: 'Germany: Capital gains tax (25%)' },
+                'FR': { rate: 0.30, info: 'France: Capital gains tax (30%)' },
+                'NL': { rate: 0.31, info: 'Netherlands: Box 3 tax (31%)' },
+                'CH': { rate: 0, info: 'Switzerland: No capital gains tax for private investors' },
+                'JP': { rate: 0.20, info: 'Japan: Capital gains tax (20%)' },
+                'HK': { rate: 0, info: 'Hong Kong: No capital gains tax' },
+                'AE': { rate: 0, info: 'UAE: No capital gains tax' },
+                'NZ': { rate: 0, info: 'New Zealand: No capital gains tax for most investors' },
+                'IN': { rate: holdingPeriod >= 12 ? 0.10 : 0.15, info: holdingPeriod >= 12 ? 'India: Long-term CGT (10%)' : 'India: Short-term CGT (15%)' },
+                'MY': { rate: 0, info: 'Malaysia: No capital gains tax for individuals' }
+            };
+
+            const countryTax = taxRates[country] || { rate: 0.20, info: 'Default: 20% capital gains tax' };
+            taxRate = countryTax.rate;
+            taxInfo = countryTax.info;
+
+            // Calculate tax
+            if (capitalGain > 0) {
+                finalTax = capitalGain * taxRate;
+                const withholdingAmount = capitalGain * (withholdingTax / 100);
+                const netTax = Math.max(0, finalTax - withholdingAmount);
+
+                resultDiv.innerHTML = `
+                    <strong>${taxInfo}</strong><br>
+                    Capital Gain: SGD ${capitalGain.toLocaleString()}<br>
+                    Tax Rate: ${(taxRate * 100).toFixed(1)}%<br>
+                    Gross Tax: SGD ${finalTax.toLocaleString()}<br>
+                    Withholding Tax Paid: SGD ${withholdingAmount.toLocaleString()}<br>
+                    <strong>Net Tax Due: SGD ${netTax.toLocaleString()}</strong>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <strong>${taxInfo}</strong><br>
+                    Capital Loss: SGD ${Math.abs(capitalGain).toLocaleString()}<br>
+                    <strong>No tax due on losses</strong><br>
+                    <small>Losses may be deductible against future gains</small>
+                `;
+            }
+
+            resultDiv.style.display = 'block';
+        }
     </script>
 </body>
 </html>
