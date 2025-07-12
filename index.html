@@ -4,9 +4,290 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expat Portfolio Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .currency-converter {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-size: 1.2em;
+            text-align: center;
+        }
+
+        .market-hours {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .market-status {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        .status-open {
+            color: #4CAF50;
+        }
+
+        .status-closed {
+            color: #f44336;
+        }
+
+        .coming-soon {
+            text-align: center;
+            font-style: italic;
+            opacity: 0.8;
+        }
+    </style>
 </head>
 <body>
-    <h1>Expat Portfolio Tracker</h1>
-    <p>Coming soon! A tool to help expats track international investments.</p>
+    <div class="container">
+        <header>
+            <h1>🌍 Expat Portfolio Tracker</h1>
+            <p class="subtitle">Track your international investments across multiple currencies</p>
+        </header>
+
+        <div class="features">
+            <!-- Currency Converter -->
+            <div class="feature-card currency-converter">
+                <h3>💱 Currency Converter</h3>
+                <div class="input-group">
+                    <label for="amount">Amount:</label>
+                    <input type="number" id="amount" placeholder="Enter amount" value="1000">
+                </div>
+                <div class="input-group">
+                    <label for="fromCurrency">From:</label>
+                    <select id="fromCurrency">
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - British Pound</option>
+                        <option value="JPY">JPY - Japanese Yen</option>
+                        <option value="CAD">CAD - Canadian Dollar</option>
+                        <option value="AUD">AUD - Australian Dollar</option>
+                        <option value="SGD">SGD - Singapore Dollar</option>
+                        <option value="CHF">CHF - Swiss Franc</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="toCurrency">To:</label>
+                    <select id="toCurrency">
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="GBP">GBP - British Pound</option>
+                        <option value="JPY">JPY - Japanese Yen</option>
+                        <option value="CAD">CAD - Canadian Dollar</option>
+                        <option value="AUD">AUD - Australian Dollar</option>
+                        <option value="SGD">SGD - Singapore Dollar</option>
+                        <option value="CHF">CHF - Swiss Franc</option>
+                    </select>
+                </div>
+                <button onclick="convertCurrency()">Convert</button>
+                <div id="conversionResult" class="result" style="display: none;"></div>
+            </div>
+
+            <!-- Market Hours -->
+            <div class="feature-card market-hours">
+                <h3>🕐 Global Market Hours</h3>
+                <div id="marketHours">
+                    <div class="market-status">
+                        <span>🇺🇸 NYSE (New York)</span>
+                        <span id="nyseStatus" class="status-closed">Closed</span>
+                    </div>
+                    <div class="market-status">
+                        <span>🇬🇧 LSE (London)</span>
+                        <span id="lseStatus" class="status-closed">Closed</span>
+                    </div>
+                    <div class="market-status">
+                        <span>🇯🇵 TSE (Tokyo)</span>
+                        <span id="tseStatus" class="status-closed">Closed</span>
+                    </div>
+                    <div class="market-status">
+                        <span>🇦🇺 ASX (Sydney)</span>
+                        <span id="asxStatus" class="status-closed">Closed</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Tracker -->
+            <div class="feature-card">
+                <h3>📊 Portfolio Tracker</h3>
+                <p class="coming-soon">Coming soon! Add your stocks and track performance across currencies.</p>
+            </div>
+
+            <!-- Tax Calculator -->
+            <div class="feature-card">
+                <h3>💼 Tax Calculator</h3>
+                <p class="coming-soon">Coming soon! Calculate taxes on international investments.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Currency conversion function
+        async function convertCurrency() {
+            const amount = document.getElementById('amount').value;
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+            const resultDiv = document.getElementById('conversionResult');
+
+            if (!amount || amount <= 0) {
+                alert('Please enter a valid amount');
+                return;
+            }
+
+            if (fromCurrency === toCurrency) {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `${amount} ${fromCurrency} = ${amount} ${toCurrency}`;
+                return;
+            }
+
+            try {
+                // Using a free currency API
+                const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`);
+                const data = await response.json();
+                
+                const rate = data.rates[toCurrency];
+                const convertedAmount = (amount * rate).toFixed(2);
+                
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `${amount} ${fromCurrency} = ${convertedAmount} ${toCurrency}<br><small>Rate: 1 ${fromCurrency} = ${rate.toFixed(4)} ${toCurrency}</small>`;
+            } catch (error) {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = 'Error fetching exchange rates. Please try again.';
+            }
+        }
+
+        // Market hours checker
+        function updateMarketHours() {
+            const now = new Date();
+            const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+            
+            // Market hours in UTC
+            const markets = {
+                nyse: { open: 14.5, close: 21, name: 'nyseStatus' }, // 9:30 AM - 4:00 PM EST
+                lse: { open: 8, close: 16.5, name: 'lseStatus' },    // 8:00 AM - 4:30 PM GMT
+                tse: { open: 0, close: 6, name: 'tseStatus' },       // 9:00 AM - 3:00 PM JST
+                asx: { open: 23, close: 6, name: 'asxStatus' }       // 10:00 AM - 4:00 PM AEST
+            };
+
+            const currentUTCHour = new Date(utcTime).getUTCHours() + (new Date(utcTime).getUTCMinutes() / 60);
+            
+            Object.keys(markets).forEach(market => {
+                const marketInfo = markets[market];
+                const statusElement = document.getElementById(marketInfo.name);
+                
+                let isOpen = false;
+                if (marketInfo.open < marketInfo.close) {
+                    isOpen = currentUTCHour >= marketInfo.open && currentUTCHour < marketInfo.close;
+                } else {
+                    // Market crosses midnight
+                    isOpen = currentUTCHour >= marketInfo.open || currentUTCHour < marketInfo.close;
+                }
+                
+                statusElement.textContent = isOpen ? 'Open' : 'Closed';
+                statusElement.className = isOpen ? 'status-open' : 'status-closed';
+            });
+        }
+
+        // Update market hours every minute
+        updateMarketHours();
+        setInterval(updateMarketHours, 60000);
+    </script>
 </body>
 </html>
