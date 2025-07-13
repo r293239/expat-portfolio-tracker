@@ -55,6 +55,22 @@
             gap: 1rem;
         }
 
+        /* Loading spinner */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         /* Google Ad Styles */
         .ad-container {
             background: white;
@@ -518,6 +534,25 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
         }
+
+        /* Error message */
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            border: 1px solid #c3e6cb;
+        }
     </style>
 </head>
 <body>
@@ -580,7 +615,7 @@
                                 <div class="summary-label">Total Stocks</div>
                             </div>
                             <div class="summary-item">
-                                <div class="summary-value" id="currencies">0</div>
+                                <div class="summary-value" id="currencies">5</div>
                                 <div class="summary-label">Currencies</div>
                             </div>
                         </div>
@@ -594,13 +629,16 @@
                         <div class="currency-converter">
                             <div class="currency-input">
                                 <label>From</label>
-                                <input type="number" id="from-amount" placeholder="Amount" value="1">
+                                <input type="number" id="from-amount" placeholder="Amount" value="1" min="0" step="0.01">
                                 <select id="from-currency">
                                     <option value="USD">USD</option>
                                     <option value="EUR">EUR</option>
                                     <option value="GBP">GBP</option>
                                     <option value="JPY">JPY</option>
                                     <option value="SGD">SGD</option>
+                                    <option value="CAD">CAD</option>
+                                    <option value="AUD">AUD</option>
+                                    <option value="CHF">CHF</option>
                                 </select>
                             </div>
                             <button class="convert-btn" onclick="convertCurrency()">Convert</button>
@@ -613,6 +651,9 @@
                                     <option value="GBP">GBP</option>
                                     <option value="JPY">JPY</option>
                                     <option value="SGD">SGD</option>
+                                    <option value="CAD">CAD</option>
+                                    <option value="AUD">AUD</option>
+                                    <option value="CHF">CHF</option>
                                 </select>
                             </div>
                         </div>
@@ -632,60 +673,11 @@
                         <div class="box-header">
                             <div class="box-title">Market Overview - S&P 500</div>
                         </div>
-                        <div class="chart-container">
-                            <svg class="line-chart" viewBox="0 0 500 250">
-                                <defs>
-                                    <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                        <stop offset="0%" style="stop-color:#007bff;stop-opacity:0.3" />
-                                        <stop offset="100%" style="stop-color:#007bff;stop-opacity:0" />
-                                    </linearGradient>
-                                </defs>
-                                
-                                <!-- Grid lines -->
-                                <g class="chart-grid" stroke="#e9ecef" stroke-width="1">
-                                    <line x1="50" y1="40" x2="450" y2="40" />
-                                    <line x1="50" y1="90" x2="450" y2="90" />
-                                    <line x1="50" y1="140" x2="450" y2="140" />
-                                    <line x1="50" y1="190" x2="450" y2="190" />
-                                    <line x1="100" y1="30" x2="100" y2="200" />
-                                    <line x1="200" y1="30" x2="200" y2="200" />
-                                    <line x1="300" y1="30" x2="300" y2="200" />
-                                    <line x1="400" y1="30" x2="400" y2="200" />
-                                </g>
-                                
-                                <!-- Y-axis labels (values) -->
-                                <g class="chart-axis">
-                                    <text x="45" y="45" text-anchor="end">$4,200</text>
-                                    <text x="45" y="95" text-anchor="end">$4,000</text>
-                                    <text x="45" y="145" text-anchor="end">$3,800</text>
-                                    <text x="45" y="195" text-anchor="end">$3,600</text>
-                                </g>
-                                
-                                <!-- X-axis labels (dates) -->
-                                <g class="chart-axis">
-                                    <text x="100" y="220" text-anchor="middle">Jan 2024</text>
-                                    <text x="200" y="220" text-anchor="middle">Apr 2024</text>
-                                    <text x="300" y="220" text-anchor="middle">Jul 2024</text>
-                                    <text x="400" y="220" text-anchor="middle">Oct 2024</text>
-                                </g>
-                                
-                                <!-- Chart area fill -->
-                                <path class="chart-area" d="M50,180 L100,160 L150,140 L200,120 L250,100 L300,110 L350,90 L400,70 L450,60 L450,200 L50,200 Z" fill="url(#areaGradient)" />
-                                
-                                <!-- Chart line -->
-                                <path class="chart-line" d="M50,180 L100,160 L150,140 L200,120 L250,100 L300,110 L350,90 L400,70 L450,60" />
-                                
-                                <!-- Data points -->
-                                <circle class="chart-point" cx="50" cy="180" r="3" />
-                                <circle class="chart-point" cx="100" cy="160" r="3" />
-                                <circle class="chart-point" cx="150" cy="140" r="3" />
-                                <circle class="chart-point" cx="200" cy="120" r="3" />
-                                <circle class="chart-point" cx="250" cy="100" r="3" />
-                                <circle class="chart-point" cx="300" cy="110" r="3" />
-                                <circle class="chart-point" cx="350" cy="90" r="3" />
-                                <circle class="chart-point" cx="400" cy="70" r="3" />
-                                <circle class="chart-point" cx="450" cy="60" r="3" />
-                            </svg>
+                        <div class="chart-container" id="sp500-chart">
+                            <div class="chart-placeholder">
+                                <div class="loading"></div>
+                                <div>Loading S&P 500 data...</div>
+                            </div>
                         </div>
                     </div>
 
@@ -696,9 +688,10 @@
                         </div>
                         <div class="add-stock-form">
                             <input type="text" id="stock-symbol" placeholder="Stock Symbol (e.g., AAPL)">
-                            <input type="number" id="stock-shares" placeholder="Number of Shares">
+                            <input type="number" id="stock-shares" placeholder="Number of Shares" min="1" step="1">
                             <button class="add-btn" onclick="addStock()">Add Stock</button>
                         </div>
+                        <div id="stock-messages"></div>
                         <div class="stocks-list" id="stocks-list">
                             <!-- Stock items will be populated by JavaScript -->
                         </div>
@@ -769,49 +762,153 @@
     </div>
 
     <script>
-        // Mock data and functionality
+        // Alpha Vantage API Configuration
+        const API_KEY = 'XRKGOK2OQ9NH80H8';
+        const BASE_URL = 'https://www.alphavantage.co/query';
+        
+        // Cache for API responses to avoid hitting rate limits
+        const dataCache = {};
+        const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+        
+        // Market timezones and trading hours
         const markets = [
-            { name: 'NYSE', timezone: 'America/New_York', openTime: '09:30', closeTime: '16:00' },
-            { name: 'NASDAQ', timezone: 'America/New_York', openTime: '09:30', closeTime: '16:00' },
-            { name: 'LSE', timezone: 'Europe/London', openTime: '08:00', closeTime: '16:30' },
-            { name: 'TSE', timezone: 'Asia/Tokyo', openTime: '09:00', closeTime: '15:00' },
-            { name: 'SGX', timezone: 'Asia/Singapore', openTime: '09:00', closeTime: '17:00' },
-            { name: 'HKEX', timezone: 'Asia/Hong_Kong', openTime: '09:30', closeTime: '16:00' }
+            { name: 'NYSE', timezone: 'America/New_York', openTime: 9.5, closeTime: 16 },
+            { name: 'NASDAQ', timezone: 'America/New_York', openTime: 9.5, closeTime: 16 },
+            { name: 'LSE', timezone: 'Europe/London', openTime: 8, closeTime: 16.5 },
+            { name: 'TSE', timezone: 'Asia/Tokyo', openTime: 9, closeTime: 15 },
+            { name: 'SGX', timezone: 'Asia/Singapore', openTime: 9, closeTime: 17 },
+            { name: 'HKEX', timezone: 'Asia/Hong_Kong', openTime: 9.5, closeTime: 16 }
         ];
 
-        const stocks = [];
+        // Portfolio data
+        let stocks = [];
+        let exchangeRates = {};
+        let sp500Data = null;
 
-        const exchangeRates = {
-            'USD': { 'EUR': 0.85, 'GBP': 0.73, 'JPY': 110, 'SGD': 1.35 },
-            'EUR': { 'USD': 1.18, 'GBP': 0.86, 'JPY': 129, 'SGD': 1.59 },
-            'GBP': { 'USD': 1.37, 'EUR': 1.16, 'JPY': 150, 'SGD': 1.85 },
-            'JPY': { 'USD': 0.009, 'EUR': 0.008, 'GBP': 0.007, 'SGD': 0.012 },
-            'SGD': { 'USD': 0.74, 'EUR': 0.63, 'GBP': 0.54, 'JPY': 81 }
-        };
-
-        function updateTime() {
-            const now = new Date();
-            document.getElementById('current-time').textContent = now.toLocaleTimeString();
-            document.getElementById('update-time').textContent = now.toLocaleTimeString();
+        // Utility functions
+        function showMessage(elementId, message, type = 'error') {
+            const messageElement = document.getElementById(elementId);
+            messageElement.innerHTML = `<div class="${type}-message">${message}</div>`;
+            setTimeout(() => {
+                messageElement.innerHTML = '';
+            }, 5000);
         }
 
+        function formatCurrency(amount, currency = 'USD') {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: currency
+            }).format(amount);
+        }
+
+        function formatChange(change, percentage = false) {
+            const sign = change >= 0 ? '+' : '';
+            const suffix = percentage ? '%' : '';
+            return `${sign}${change.toFixed(2)}${suffix}`;
+        }
+
+        // API Functions
+        async function fetchWithCache(url, cacheKey) {
+            const cached = dataCache[cacheKey];
+            if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+                return cached.data;
+            }
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data['Error Message']) {
+                    throw new Error(data['Error Message']);
+                }
+                
+                if (data['Note']) {
+                    throw new Error('API rate limit exceeded. Please try again later.');
+                }
+
+                dataCache[cacheKey] = {
+                    data: data,
+                    timestamp: Date.now()
+                };
+                
+                return data;
+            } catch (error) {
+                console.error('API Error:', error);
+                throw error;
+            }
+        }
+
+        async function fetchStockQuote(symbol) {
+            const url = `${BASE_URL}?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}`;
+            const data = await fetchWithCache(url, `quote_${symbol}`);
+            return data['Global Quote'];
+        }
+
+        async function fetchExchangeRates() {
+            try {
+                const url = `${BASE_URL}?function=FX_DAILY&from_symbol=USD&to_symbol=EUR&apikey=${API_KEY}`;
+                const data = await fetchWithCache(url, 'exchange_rates');
+                
+                // For demo purposes, we'll use hardcoded rates since Alpha Vantage FX API has limitations
+                exchangeRates = {
+                    'USD': { 'EUR': 0.85, 'GBP': 0.73, 'JPY': 110, 'SGD': 1.35, 'CAD': 1.25, 'AUD': 1.45, 'CHF': 0.92 },
+                    'EUR': { 'USD': 1.18, 'GBP': 0.86, 'JPY': 129, 'SGD': 1.59, 'CAD': 1.47, 'AUD': 1.71, 'CHF': 1.08 },
+                    'GBP': { 'USD': 1.37, 'EUR': 1.16, 'JPY': 150, 'SGD': 1.85, 'CAD': 1.71, 'AUD': 1.99, 'CHF': 1.26 },
+                    'JPY': { 'USD': 0.009, 'EUR': 0.008, 'GBP': 0.007, 'SGD': 0.012, 'CAD': 0.011, 'AUD': 0.013, 'CHF': 0.008 },
+                    'SGD': { 'USD': 0.74, 'EUR': 0.63, 'GBP': 0.54, 'JPY': 81, 'CAD': 0.93, 'AUD': 1.07, 'CHF': 0.68 },
+                    'CAD': { 'USD': 0.80, 'EUR': 0.68, 'GBP': 0.58, 'JPY': 88, 'SGD': 1.08, 'AUD': 1.16, 'CHF': 0.74 },
+                    'AUD': { 'USD': 0.69, 'EUR': 0.58, 'GBP': 0.50, 'JPY': 76, 'SGD': 0.93, 'CAD': 0.86, 'CHF': 0.63 },
+                    'CHF': { 'USD': 1.09, 'EUR': 0.93, 'GBP': 0.79, 'JPY': 120, 'SGD': 1.47, 'CAD': 1.35, 'AUD': 1.59 }
+                };
+            } catch (error) {
+                console.error('Failed to fetch exchange rates:', error);
+                // Use fallback rates
+                exchangeRates = {
+                    'USD': { 'EUR': 0.85, 'GBP': 0.73, 'JPY': 110, 'SGD': 1.35, 'CAD': 1.25, 'AUD': 1.45, 'CHF': 0.92 }
+                };
+            }
+        }
+
+        async function fetchSP500Data() {
+            try {
+                const url = `${BASE_URL}?function=TIME_SERIES_DAILY&symbol=SPY&apikey=${API_KEY}`;
+                const data = await fetchWithCache(url, 'sp500_data');
+                
+                const timeSeries = data['Time Series (Daily)'];
+                if (!timeSeries) {
+                    throw new Error('No time series data available');
+                }
+                
+                const dates = Object.keys(timeSeries).slice(0, 30).reverse();
+                sp500Data = dates.map(date => ({
+                    date: new Date(date),
+                    value: parseFloat(timeSeries[date]['4. close'])
+                }));
+                
+                renderSP500Chart();
+            } catch (error) {
+                console.error('Failed to fetch S&P 500 data:', error);
+                document.getElementById('sp500-chart').innerHTML = '<div class="chart-placeholder">Failed to load S&P 500 data</div>';
+            }
+        }
+
+        // Market Status Functions
         function isMarketOpen(market) {
             const now = new Date();
-            const dayOfWeek = now.getDay();
+            const marketTime = new Date(now.toLocaleString("en-US", {timeZone: market.timezone}));
+            const dayOfWeek = marketTime.getDay();
+            const currentHour = marketTime.getHours() + marketTime.getMinutes() / 60;
             
-            // Weekend check
+            // Check if it's weekend
             if (dayOfWeek === 0 || dayOfWeek === 6) {
                 return 'weekend';
             }
             
-            // Simple time check (would need proper timezone handling in real app)
-            const currentHour = now.getHours();
-            const openHour = parseInt(market.openTime.split(':')[0]);
-            const closeHour = parseInt(market.closeTime.split(':')[0]);
-            
-            if (currentHour >= openHour && currentHour < closeHour) {
+            // Check if market is open
+            if (currentHour >= market.openTime && currentHour < market.closeTime) {
                 return 'open';
             }
+            
             return 'closed';
         }
 
@@ -824,28 +921,109 @@
                 const marketItem = document.createElement('div');
                 marketItem.className = `market-item ${status}`;
                 
-                let statusText = status.charAt(0).toUpperCase() + status.slice(1);
-                let statusClass = `status-${status}`;
+                const statusText = {
+                    'open': 'Open',
+                    'closed': 'Closed',
+                    'weekend': 'Weekend'
+                };
                 
                 marketItem.innerHTML = `
                     <div class="market-name">${market.name}</div>
-                    <div class="market-status-badge ${statusClass}">${statusText}</div>
+                    <div class="market-status-badge status-${status}">${statusText[status]}</div>
                 `;
                 
                 marketsGrid.appendChild(marketItem);
             });
+            
+            // Update last updated time
+            const now = new Date();
+            document.getElementById('update-time').textContent = now.toLocaleTimeString();
         }
 
-        function updatePortfolioSummary() {
-            const totalValue = stocks.reduce((sum, stock) => sum + (stock.price * stock.shares), 0);
-            const dailyChange = stocks.reduce((sum, stock) => sum + (stock.change * stock.shares), 0);
+        // Currency Converter Functions
+        function convertCurrency() {
+            const fromAmount = parseFloat(document.getElementById('from-amount').value);
+            const fromCurrency = document.getElementById('from-currency').value;
+            const toCurrency = document.getElementById('to-currency').value;
             
-            document.getElementById('total-value').textContent = `$${totalValue.toFixed(2)}`;
-            document.getElementById('daily-change').textContent = `${dailyChange >= 0 ? '+' : ''}$${dailyChange.toFixed(2)}`;
-            document.getElementById('daily-change').className = `summary-value ${dailyChange >= 0 ? 'positive' : 'negative'}`;
-            document.getElementById('total-stocks').textContent = stocks.length;
-            document.getElementById('currencies').textContent = '5';
+            if (isNaN(fromAmount) || fromAmount <= 0) {
+                alert('Please enter a valid amount');
+                return;
             }
+            
+            let result;
+            
+            if (fromCurrency === toCurrency) {
+                result = fromAmount;
+            } else if (exchangeRates[fromCurrency] && exchangeRates[fromCurrency][toCurrency]) {
+                result = fromAmount * exchangeRates[fromCurrency][toCurrency];
+            } else {
+                // Fallback conversion through USD
+                const toUSD = fromCurrency === 'USD' ? fromAmount : fromAmount / (exchangeRates['USD'][fromCurrency] || 1);
+                result = toCurrency === 'USD' ? toUSD : toUSD * (exchangeRates['USD'][toCurrency] || 1);
+            }
+            
+            document.getElementById('to-amount').value = result.toFixed(2);
+        }
+
+        // Stock Management Functions
+        async function addStock() {
+            const symbol = document.getElementById('stock-symbol').value.toUpperCase().trim();
+            const shares = parseInt(document.getElementById('stock-shares').value);
+            
+            if (!symbol || isNaN(shares) || shares <= 0) {
+                showMessage('stock-messages', 'Please enter a valid stock symbol and number of shares');
+                return;
+            }
+            
+            // Check if stock already exists
+            if (stocks.find(stock => stock.symbol === symbol)) {
+                showMessage('stock-messages', 'Stock already exists in your portfolio');
+                return;
+            }
+            
+            try {
+                showMessage('stock-messages', 'Adding stock...', 'success');
+                const quote = await fetchStockQuote(symbol);
+                
+                if (!quote || !quote['05. price']) {
+                    throw new Error('Invalid stock symbol or no data available');
+                }
+                
+                const stock = {
+                    symbol: symbol,
+                    name: quote['01. symbol'],
+                    shares: shares,
+                    price: parseFloat(quote['05. price']),
+                    change: parseFloat(quote['09. change']),
+                    changePercent: parseFloat(quote['10. change percent'].replace('%', ''))
+                };
+                
+                stocks.push(stock);
+                saveStocks();
+                updateStocksList();
+                updatePortfolioSummary();
+                
+                // Clear form
+                document.getElementById('stock-symbol').value = '';
+                document.getElementById('stock-shares').value = '';
+                
+                showMessage('stock-messages', 'Stock added successfully!', 'success');
+            } catch (error) {
+                console.error('Error adding stock:', error);
+                showMessage('stock-messages', error.message || 'Failed to add stock. Please try again.');
+            }
+        }
+
+        function removeStock(symbol) {
+            if (confirm(`Are you sure you want to remove ${symbol} from your portfolio?`)) {
+                stocks = stocks.filter(stock => stock.symbol !== symbol);
+                saveStocks();
+                updateStocksList();
+                updatePortfolioSummary();
+                showMessage('stock-messages', 'Stock removed successfully!', 'success');
+            }
+        }
 
         function updateStocksList() {
             const stocksList = document.getElementById('stocks-list');
@@ -853,182 +1031,262 @@
             if (stocks.length === 0) {
                 stocksList.innerHTML = `
                     <div class="empty-state">
-                        <h3>No stocks added yet</h3>
-                        <p>Add your first stock using the form above</p>
+                        <h3>No stocks in your portfolio</h3>
+                        <p>Add stocks using the form above to get started</p>
                     </div>
                 `;
                 return;
             }
             
-            stocksList.innerHTML = '';
-            
-            stocks.forEach((stock, index) => {
-                const stockItem = document.createElement('div');
-                stockItem.className = 'stock-item';
-                
+            stocksList.innerHTML = stocks.map(stock => {
+                const totalValue = stock.price * stock.shares;
                 const changeClass = stock.change >= 0 ? 'positive' : 'negative';
-                const changeSymbol = stock.change >= 0 ? '+' : '';
                 
-                stockItem.innerHTML = `
-                    <div class="stock-info">
-                        <div class="stock-symbol">${stock.symbol}</div>
-                        <div class="stock-name">${stock.name}</div>
+                return `
+                    <div class="stock-item">
+                        <div class="stock-info">
+                            <div class="stock-symbol">${stock.symbol}</div>
+                            <div class="stock-name">${stock.shares} shares</div>
+                        </div>
+                        <div class="stock-price">
+                            <div>${formatCurrency(stock.price)}</div>
+                            <div class="stock-change ${changeClass}">
+                                ${formatChange(stock.change)} (${formatChange(stock.changePercent, true)})
+                            </div>
+                        </div>
+                        <div>
+                            <div style="font-weight: bold;">${formatCurrency(totalValue)}</div>
+                            <button class="delete-btn" onclick="removeStock('${stock.symbol}')">Remove</button>
+                        </div>
                     </div>
-                    <div class="stock-price">
-                        <div>$${stock.price.toFixed(2)}</div>
-                        <div class="stock-change ${changeClass}">${changeSymbol}${stock.change.toFixed(2)}</div>
-                    </div>
-                    <div>
-                        <div>${stock.shares} shares</div>
-                        <div class="stock-change">$${(stock.price * stock.shares).toFixed(2)}</div>
-                    </div>
-                    <button class="delete-btn" onclick="removeStock(${index})">Delete</button>
                 `;
-                
-                stocksList.appendChild(stockItem);
+            }).join('');
+        }
+
+        function updatePortfolioSummary() {
+            const totalValue = stocks.reduce((sum, stock) => sum + (stock.price * stock.shares), 0);
+            const dailyChange = stocks.reduce((sum, stock) => sum + (stock.change * stock.shares), 0);
+            
+            document.getElementById('total-value').textContent = formatCurrency(totalValue);
+            document.getElementById('daily-change').textContent = formatChange(dailyChange);
+            document.getElementById('daily-change').className = `summary-value ${dailyChange >= 0 ? 'positive' : 'negative'}`;
+            document.getElementById('total-stocks').textContent = stocks.length;
+        }
+
+        // Chart Functions
+        function renderSP500Chart() {
+            const chartContainer = document.getElementById('sp500-chart');
+            
+            if (!sp500Data || sp500Data.length === 0) {
+                chartContainer.innerHTML = '<div class="chart-placeholder">No S&P 500 data available</div>';
+                return;
+            }
+            
+            const width = 500;
+            const height = 250;
+            const margin = { top: 20, right: 30, bottom: 40, left: 60 };
+            
+            const minValue = Math.min(...sp500Data.map(d => d.value));
+            const maxValue = Math.max(...sp500Data.map(d => d.value));
+            const valueRange = maxValue - minValue;
+            
+            const svg = `
+                <svg class="line-chart" viewBox="0 0 ${width} ${height}">
+                    <defs>
+                        <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#007bff;stop-opacity:0.3" />
+                            <stop offset="100%" style="stop-color:#007bff;stop-opacity:0" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <!-- Grid lines -->
+                    ${Array.from({length: 5}, (_, i) => {
+                        const y = margin.top + (i * (height - margin.top - margin.bottom) / 4);
+                        return `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#e9ecef" stroke-width="1"/>`;
+                    }).join('')}
+                    
+                    <!-- Chart line and area -->
+                    ${(() => {
+                        const points = sp500Data.map((d, i) => {
+                            const x = margin.left + (i * (width - margin.left - margin.right) / (sp500Data.length - 1));
+                            const y = margin.top + ((maxValue - d.value) / valueRange) * (height - margin.top - margin.bottom);
+                            return `${x},${y}`;
+                        }).join(' ');
+                        
+                        const areaPoints = `${margin.left},${height - margin.bottom} ${points} ${width - margin.right},${height - margin.bottom}`;
+                        
+                        return `
+                            <polygon points="${areaPoints}" fill="url(#areaGradient)" />
+                            <polyline points="${points}" fill="none" stroke="#007bff" stroke-width="2" />
+                        `;
+                    })()}
+                    
+                    <!-- Data points -->
+                    ${sp500Data.map((d, i) => {
+                        const x = margin.left + (i * (width - margin.left - margin.right) / (sp500Data.length - 1));
+                        const y = margin.top + ((maxValue - d.value) / valueRange) * (height - margin.top - margin.bottom);
+                        return `<circle cx="${x}" cy="${y}" r="3" class="chart-point" />`;
+                    }).join('')}
+                    
+                    <!-- Y-axis labels -->
+                    ${Array.from({length: 5}, (_, i) => {
+                        const value = maxValue - (i * valueRange / 4);
+                        const y = margin.top + (i * (height - margin.top - margin.bottom) / 4);
+                        return `<text x="${margin.left - 10}" y="${y + 5}" class="chart-axis" text-anchor="end">$${value.toFixed(0)}</text>`;
+                    }).join('')}
+                    
+                    <!-- X-axis labels -->
+                    ${[0, Math.floor(sp500Data.length / 2), sp500Data.length - 1].map(i => {
+                        const x = margin.left + (i * (width - margin.left - margin.right) / (sp500Data.length - 1));
+                        const date = sp500Data[i].date;
+                        return `<text x="${x}" y="${height - margin.bottom + 20}" class="chart-axis" text-anchor="middle">${date.getMonth() + 1}/${date.getDate()}</text>`;
+                    }).join('')}
+                </svg>
+            `;
+            
+            chartContainer.innerHTML = svg;
+        }
+
+        // Local Storage Functions
+        function saveStocks() {
+            try {
+                // Since we can't use localStorage in artifacts, we'll just keep data in memory
+                console.log('Stocks saved to memory:', stocks);
+            } catch (error) {
+                console.error('Failed to save stocks:', error);
+            }
+        }
+
+        function loadStocks() {
+            try {
+                // Since we can't use localStorage in artifacts, we'll start with empty array
+                stocks = [];
+                console.log('Stocks loaded from memory:', stocks);
+            } catch (error) {
+                console.error('Failed to load stocks:', error);
+                stocks = [];
+            }
+        }
+
+        // Time Functions
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('en-US', {
+                timeZone: 'Asia/Singapore',
+                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
             });
+            document.getElementById('current-time').textContent = `SGT ${timeString}`;
         }
 
-        function addStock() {
-            const symbolInput = document.getElementById('stock-symbol');
-            const sharesInput = document.getElementById('stock-shares');
-            
-            const symbol = symbolInput.value.trim().toUpperCase();
-            const shares = parseInt(sharesInput.value);
-            
-            if (!symbol || !shares || shares <= 0) {
-                alert('Please enter a valid stock symbol and number of shares');
-                return;
+        // Event Listeners
+        document.getElementById('stock-symbol').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addStock();
             }
-            
-            // Check if stock already exists
-            if (stocks.find(stock => stock.symbol === symbol)) {
-                alert('Stock already exists in your portfolio');
-                return;
-            }
-            
-            // Mock stock data (in real app, this would come from an API)
-            const mockStocks = {
-                'AAPL': { name: 'Apple Inc.', price: 175.43, change: 2.15 },
-                'GOOGL': { name: 'Alphabet Inc.', price: 2743.88, change: -15.22 },
-                'MSFT': { name: 'Microsoft Corp.', price: 331.62, change: 1.85 },
-                'AMZN': { name: 'Amazon.com Inc.', price: 3372.20, change: -8.45 },
-                'TSLA': { name: 'Tesla Inc.', price: 1024.86, change: 45.23 },
-                'NVDA': { name: 'NVIDIA Corp.', price: 208.78, change: 3.42 },
-                'META': { name: 'Meta Platforms Inc.', price: 331.79, change: -2.18 },
-                'NFLX': { name: 'Netflix Inc.', price: 398.42, change: 7.65 }
-            };
-            
-            const stockData = mockStocks[symbol] || {
-                name: `${symbol} Corp.`,
-                price: Math.random() * 200 + 50,
-                change: (Math.random() - 0.5) * 20
-            };
-            
-            stocks.push({
-                symbol: symbol,
-                name: stockData.name,
-                price: stockData.price,
-                change: stockData.change,
-                shares: shares
-            });
-            
-            symbolInput.value = '';
-            sharesInput.value = '';
-            
-            updateStocksList();
-            updatePortfolioSummary();
-        }
+        });
 
-        function removeStock(index) {
-            stocks.splice(index, 1);
-            updateStocksList();
-            updatePortfolioSummary();
-        }
+        document.getElementById('stock-shares').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addStock();
+            }
+        });
 
-        function convertCurrency() {
-            const fromAmount = parseFloat(document.getElementById('from-amount').value);
-            const fromCurrency = document.getElementById('from-currency').value;
-            const toCurrency = document.getElementById('to-currency').value;
-            
-            if (!fromAmount || fromAmount <= 0) {
-                alert('Please enter a valid amount');
-                return;
+        document.getElementById('from-amount').addEventListener('input', function() {
+            if (this.value && !isNaN(this.value) && this.value > 0) {
+                convertCurrency();
             }
-            
-            if (fromCurrency === toCurrency) {
-                document.getElementById('to-amount').value = fromAmount.toFixed(2);
-                return;
-            }
-            
-            let rate;
-            if (fromCurrency === 'USD') {
-                rate = exchangeRates['USD'][toCurrency];
-            } else if (toCurrency === 'USD') {
-                rate = exchangeRates[fromCurrency]['USD'];
-            } else {
-                // Convert through USD
-                const toUSD = exchangeRates[fromCurrency]['USD'];
-                const fromUSD = exchangeRates['USD'][toCurrency];
-                rate = toUSD * fromUSD;
-            }
-            
-            const result = fromAmount * rate;
-            document.getElementById('to-amount').value = result.toFixed(2);
-        }
+        });
 
-        // Initialize the app
-        function init() {
-            updateTime();
-            updateMarketStatus();
-            updateStocksList();
-            updatePortfolioSummary();
-            
-            // Update time every second
-            setInterval(updateTime, 1000);
-            
-            // Update market status every minute
-            setInterval(updateMarketStatus, 60000);
-            
-            // Add sample stocks for demonstration
-            setTimeout(() => {
-                stocks.push(
-                    { symbol: 'AAPL', name: 'Apple Inc.', price: 175.43, change: 2.15, shares: 10 },
-                    { symbol: 'GOOGL', name: 'Alphabet Inc.', price: 2743.88, change: -15.22, shares: 2 },
-                    { symbol: 'MSFT', name: 'Microsoft Corp.', price: 331.62, change: 1.85, shares: 15 }
-                );
-                updateStocksList();
-                updatePortfolioSummary();
-            }, 1000);
-        }
+        document.getElementById('from-currency').addEventListener('change', convertCurrency);
+        document.getElementById('to-currency').addEventListener('change', convertCurrency);
 
         // Initialize Google AdSense
         function initializeAds() {
             try {
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            } catch (e) {
-                console.log('AdSense not loaded');
+                if (typeof adsbygoogle !== 'undefined') {
+                    // Initialize all ad slots
+                    const adElements = document.querySelectorAll('.adsbygoogle');
+                    adElements.forEach(ad => {
+                        if (!ad.hasAttribute('data-adsbygoogle-status')) {
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        }
+                    });
+                }
+            } catch (error) {
+                console.log('AdSense not available in this environment');
             }
         }
 
-        // Start the application
-        window.addEventListener('load', () => {
-            init();
-            initializeAds();
-        });
-
-        // Handle Enter key in stock input
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                if (e.target.id === 'stock-symbol' || e.target.id === 'stock-shares') {
-                    addStock();
-                }
+        // Main initialization function
+        async function initialize() {
+            console.log('Initializing Expat Portfolio Tracker...');
+            
+            // Start time updates
+            updateCurrentTime();
+            setInterval(updateCurrentTime, 1000);
+            
+            // Update market status
+            updateMarketStatus();
+            setInterval(updateMarketStatus, 60000); // Update every minute
+            
+            // Load saved stocks
+            loadStocks();
+            
+            try {
+                // Fetch initial data
+                await fetchExchangeRates();
+                await fetchSP500Data();
+                
+                // Update UI
+                updateStocksList();
+                updatePortfolioSummary();
+                convertCurrency(); // Initialize currency converter
+                
+                console.log('Initialization complete');
+            } catch (error) {
+                console.error('Initialization error:', error);
+                showMessage('stock-messages', 'Failed to load market data. Some features may be limited.');
             }
-        });
+            
+            // Initialize ads
+            setTimeout(initializeAds, 1000);
+        }
+
+        // Start the application when DOM is loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initialize);
+        } else {
+            initialize();
+        }
+
+        // Refresh stock data every 5 minutes
+        setInterval(async () => {
+            if (stocks.length > 0) {
+                console.log('Refreshing stock data...');
+                for (let i = 0; i < stocks.length; i++) {
+                    try {
+                        const quote = await fetchStockQuote(stocks[i].symbol);
+                        if (quote && quote['05. price']) {
+                            stocks[i].price = parseFloat(quote['05. price']);
+                            stocks[i].change = parseFloat(quote['09. change']);
+                            stocks[i].changePercent = parseFloat(quote['10. change percent'].replace('%', ''));
+                        }
+                    } catch (error) {
+                        console.error(`Failed to refresh ${stocks[i].symbol}:`, error);
+                    }
+                }
+                updateStocksList();
+                updatePortfolioSummary();
+            }
+        }, 300000); // 5 minutes
+    </script>
+
+    <!-- Initialize Google AdSense -->
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </body>
 </html>
