@@ -13,1045 +13,634 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            background: #f5f7fa;
             color: #333;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        header {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        /* Header */
+        .header {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
         }
 
-        header h1 {
-            font-size: 2.5rem;
-            color: white;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        header p {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.9);
-            opacity: 0.9;
-        }
-
-        .market-status-section, .portfolio-section, .features-section {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-        }
-
-        .market-status-section h2, .portfolio-section h2, .features-section h2 {
-            margin-bottom: 20px;
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
             color: #2c3e50;
-            font-size: 1.8rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-box {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e1e8ed;
+        }
+
+        .box-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f1f3f4;
+        }
+
+        .box-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        /* Market Status Box */
+        .market-status {
+            grid-column: 1 / -1;
         }
 
         .markets-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
         }
 
-        .market-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid #3498db;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .market-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .market-card.open {
-            border-left-color: #27ae60;
-        }
-
-        .market-card.closed {
-            border-left-color: #e74c3c;
-        }
-
-        .market-card h3 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-
-        .market-status {
+        .market-item {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-
-        .status-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #e74c3c;
-        }
-
-        .status-indicator.open {
-            background: #27ae60;
-        }
-
-        .market-time {
-            font-size: 0.9rem;
-            color: #7f8c8d;
-        }
-
-        .portfolio-controls {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            align-items: center;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
+            padding: 0.8rem;
+            background: #f8f9fa;
             border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            border-left: 4px solid #28a745;
         }
 
-        .btn.primary {
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            color: white;
+        .market-item.closed {
+            border-left-color: #dc3545;
         }
 
-        .btn.primary:hover {
-            background: linear-gradient(45deg, #2980b9, #1f5f8b);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        .market-item.weekend {
+            border-left-color: #ffc107;
         }
 
-        .btn.secondary {
-            background: #95a5a6;
-            color: white;
+        .market-name {
+            font-weight: 500;
         }
 
-        .btn.secondary:hover {
-            background: #7f8c8d;
-            transform: translateY(-2px);
+        .market-status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
         }
 
-        select {
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            background: white;
-            transition: border-color 0.3s ease;
+        .status-open {
+            background: #d4edda;
+            color: #155724;
         }
 
-        select:focus {
-            outline: none;
-            border-color: #3498db;
+        .status-closed {
+            background: #f8d7da;
+            color: #721c24;
         }
 
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+        .status-weekend {
+            background: #fff3cd;
+            color: #856404;
         }
 
-        .portfolio-item {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid #9b59b6;
-            transition: transform 0.3s ease;
-        }
-
-        .portfolio-item:hover {
-            transform: translateY(-3px);
-        }
-
-        .portfolio-item h3 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-        }
-
-        .portfolio-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            font-size: 0.9rem;
-        }
-
-        .portfolio-details span {
-            color: #7f8c8d;
-        }
-
-        .portfolio-details strong {
-            color: #2c3e50;
-        }
-
-        .profit-positive {
-            color: #27ae60;
-            font-weight: bold;
-        }
-
-        .profit-negative {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .feature-card h3 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-
-        .feature-card p {
-            color: #7f8c8d;
-            line-height: 1.6;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
-            position: relative;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .close {
-            position: absolute;
-            right: 20px;
-            top: 15px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            color: #aaa;
-            transition: color 0.3s ease;
-        }
-
-        .close:hover {
-            color: #333;
-        }
-
-        .modal-content h2 {
-            margin-bottom: 25px;
-            color: #2c3e50;
-            text-align: center;
-        }
-
-        .modal-content form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .modal-content input {
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .modal-content input:focus {
-            outline: none;
-            border-color: #3498db;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #7f8c8d;
-        }
-
-        .empty-state h3 {
-            margin-bottom: 15px;
-            color: #95a5a6;
-        }
-
+        /* Portfolio Summary */
         .portfolio-summary {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid #f39c12;
-        }
-
-        .portfolio-summary h3 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-        }
-
-        .summary-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
         }
 
         .summary-item {
             text-align: center;
-            padding: 10px;
+            padding: 1rem;
             background: #f8f9fa;
             border-radius: 8px;
         }
 
-        .summary-item span {
-            display: block;
-            font-size: 0.9rem;
-            color: #7f8c8d;
-            margin-bottom: 5px;
-        }
-
-        .summary-item strong {
-            font-size: 1.2rem;
+        .summary-value {
+            font-size: 1.5rem;
+            font-weight: bold;
             color: #2c3e50;
         }
 
-        .refresh-indicator {
-            display: inline-block;
-            animation: spin 1s linear infinite;
-            margin-left: 10px;
+        .summary-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 0.5rem;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .positive { color: #28a745; }
+        .negative { color: #dc3545; }
+
+        /* Chart Container */
+        .chart-container {
+            height: 300px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+            position: relative;
         }
 
+        .chart-placeholder {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+
+        /* Individual Stocks */
+        .stocks-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .stock-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+            transition: background-color 0.2s;
+        }
+
+        .stock-item:hover {
+            background: #f8f9fa;
+        }
+
+        .stock-info {
+            flex: 1;
+        }
+
+        .stock-symbol {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .stock-name {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .stock-price {
+            text-align: right;
+            margin-right: 1rem;
+        }
+
+        .stock-change {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Currency Converter */
+        .currency-converter {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 1rem;
+            align-items: end;
+            margin-top: 1rem;
+        }
+
+        .currency-input {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .currency-input label {
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .currency-input input,
+        .currency-input select {
+            padding: 0.8rem;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .convert-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .convert-btn:hover {
+            background: #0056b3;
+        }
+
+        /* Add Stock Form */
+        .add-stock-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .add-stock-form input {
+            padding: 0.8rem;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .add-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .add-btn:hover {
+            background: #218838;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            header h1 {
-                font-size: 2rem;
-            }
-            
-            .portfolio-controls {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .markets-grid, .portfolio-grid, .features-grid {
+            .dashboard-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .portfolio-details {
+
+            .portfolio-summary {
                 grid-template-columns: 1fr;
             }
+
+            .currency-converter {
+                grid-template-columns: 1fr;
+            }
+
+            .add-stock-form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* SVG Line Chart */
+        .line-chart {
+            width: 100%;
+            height: 100%;
+        }
+
+        .chart-line {
+            fill: none;
+            stroke: #007bff;
+            stroke-width: 2;
+        }
+
+        .chart-area {
+            fill: rgba(0, 123, 255, 0.1);
+        }
+
+        .chart-grid {
+            stroke: #e9ecef;
+            stroke-width: 1;
         }
     </style>
 </head>
 <body>
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">🌍 Expat Portfolio Tracker</div>
+                <div class="user-info">
+                    <span>Welcome, User</span>
+                    <span>|</span>
+                    <span id="current-time"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
-        <header>
-            <h1>🌍 Expat Portfolio Tracker</h1>
-            <p>Track your international investments across multiple markets and currencies</p>
-        </header>
+        <div class="dashboard-grid">
+            <!-- Market Status Box -->
+            <div class="dashboard-box market-status">
+                <div class="box-header">
+                    <div class="box-title">Global Market Status</div>
+                    <div id="last-updated">Last updated: <span id="update-time"></span></div>
+                </div>
+                <div class="markets-grid" id="markets-grid">
+                    <!-- Market items will be populated by JavaScript -->
+                </div>
+            </div>
 
-        <main>
-            <!-- Market Status Section -->
-            <section class="market-status-section">
-                <h2>📊 Global Market Status</h2>
-                <div class="markets-grid" id="marketsGrid">
-                    <!-- Market cards will be populated here -->
+            <!-- Portfolio Summary Box -->
+            <div class="dashboard-box">
+                <div class="box-header">
+                    <div class="box-title">Portfolio Summary</div>
                 </div>
-            </section>
+                <div class="portfolio-summary">
+                    <div class="summary-item">
+                        <div class="summary-value" id="total-value">$0.00</div>
+                        <div class="summary-label">Total Portfolio Value</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value positive" id="daily-change">+$0.00</div>
+                        <div class="summary-label">Daily Change</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value" id="total-stocks">0</div>
+                        <div class="summary-label">Total Stocks</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value" id="currencies">0</div>
+                        <div class="summary-label">Currencies</div>
+                    </div>
+                </div>
+            </div>
 
-            <!-- Portfolio Section -->
-            <section class="portfolio-section">
-                <h2>💼 Your Portfolio</h2>
-                <div class="portfolio-controls">
-                    <button id="addStockBtn" class="btn primary">Add Stock</button>
-                    <button id="sampleDataBtn" class="btn secondary">Add Sample Data</button>
-                    <select id="baseCurrency">
-                        <option value="USD">USD</option>
-                        <option value="EUR">EUR</option>
-                        <option value="GBP">GBP</option>
-                        <option value="JPY">JPY</option>
-                        <option value="SGD">SGD</option>
-                        <option value="HKD">HKD</option>
-                    </select>
+            <!-- Currency Converter Box -->
+            <div class="dashboard-box">
+                <div class="box-header">
+                    <div class="box-title">Currency Converter</div>
                 </div>
-                
-                <div id="portfolioSummary" class="portfolio-summary" style="display: none;">
-                    <h3>Portfolio Summary</h3>
-                    <div class="summary-grid" id="summaryGrid">
-                        <!-- Summary items will be populated here -->
+                <div class="currency-converter">
+                    <div class="currency-input">
+                        <label>From</label>
+                        <input type="number" id="from-amount" placeholder="Amount" value="1">
+                        <select id="from-currency">
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="JPY">JPY</option>
+                            <option value="SGD">SGD</option>
+                        </select>
+                    </div>
+                    <button class="convert-btn" onclick="convertCurrency()">Convert</button>
+                    <div class="currency-input">
+                        <label>To</label>
+                        <input type="number" id="to-amount" placeholder="Result" readonly>
+                        <select id="to-currency">
+                            <option value="EUR">EUR</option>
+                            <option value="USD">USD</option>
+                            <option value="GBP">GBP</option>
+                            <option value="JPY">JPY</option>
+                            <option value="SGD">SGD</option>
+                        </select>
                     </div>
                 </div>
-                
-                <div class="portfolio-grid" id="portfolioGrid">
-                    <!-- Portfolio items will be populated here -->
-                </div>
-            </section>
+            </div>
 
-            <!-- Features Section -->
-            <section class="features-section">
-                <h2>🚀 Features</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <h3>Multi-Currency Support</h3>
-                        <p>Track investments in multiple currencies with real-time conversion rates</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Global Markets</h3>
-                        <p>Monitor market status across different time zones worldwide</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Real-time Updates</h3>
-                        <p>Get live updates on your portfolio performance and market conditions</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Profit/Loss Tracking</h3>
-                        <p>Detailed analytics on your investment gains and losses</p>
-                    </div>
+            <!-- Overall Stock Market Chart Box -->
+            <div class="dashboard-box">
+                <div class="box-header">
+                    <div class="box-title">Market Overview</div>
                 </div>
-            </section>
-        </main>
+                <div class="chart-container">
+                    <svg class="line-chart" viewBox="0 0 400 200">
+                        <defs>
+                            <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#007bff;stop-opacity:0.3" />
+                                <stop offset="100%" style="stop-color:#007bff;stop-opacity:0" />
+                            </linearGradient>
+                        </defs>
+                        <g class="chart-grid">
+                            <line x1="0" y1="50" x2="400" y2="50" />
+                            <line x1="0" y1="100" x2="400" y2="100" />
+                            <line x1="0" y1="150" x2="400" y2="150" />
+                            <line x1="100" y1="0" x2="100" y2="200" />
+                            <line x1="200" y1="0" x2="200" y2="200" />
+                            <line x1="300" y1="0" x2="300" y2="200" />
+                        </g>
+                        <path class="chart-area" d="M0,180 L50,160 L100,140 L150,120 L200,100 L250,110 L300,90 L350,70 L400,60 L400,200 L0,200 Z" fill="url(#areaGradient)" />
+                        <path class="chart-line" d="M0,180 L50,160 L100,140 L150,120 L200,100 L250,110 L300,90 L350,70 L400,60" />
+                    </svg>
+                </div>
+            </div>
 
-        <!-- Add Stock Modal -->
-        <div id="addStockModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Add New Stock</h2>
-                <form id="addStockForm">
-                    <input type="text" id="stockSymbol" placeholder="Stock Symbol (e.g., AAPL)" required>
-                    <input type="number" id="stockQuantity" placeholder="Quantity" step="0.01" required>
-                    <input type="number" id="stockPrice" placeholder="Purchase Price" step="0.01" required>
-                    <select id="stockCurrency" required>
-                        <option value="USD">USD</option>
-                        <option value="EUR">EUR</option>
-                        <option value="GBP">GBP</option>
-                        <option value="JPY">JPY</option>
-                        <option value="SGD">SGD</option>
-                        <option value="HKD">HKD</option>
-                    </select>
-                    <button type="submit" class="btn primary">Add Stock</button>
-                </form>
+            <!-- Individual Stocks Box -->
+            <div class="dashboard-box">
+                <div class="box-header">
+                    <div class="box-title">Individual Stocks</div>
+                </div>
+                <div class="add-stock-form">
+                    <input type="text" id="stock-symbol" placeholder="Stock Symbol (e.g., AAPL)">
+                    <input type="number" id="stock-shares" placeholder="Number of Shares">
+                    <button class="add-btn" onclick="addStock()">Add Stock</button>
+                </div>
+                <div class="stocks-list" id="stocks-list">
+                    <!-- Stock items will be populated by JavaScript -->
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Global Markets Configuration
-        const MARKETS = {
-            NYSE: {
-                name: 'New York Stock Exchange',
-                timezone: 'America/New_York',
-                country: '🇺🇸',
-                hours: [
-                    { start: '09:30', end: '16:00' }
-                ],
-                weekdays: [1, 2, 3, 4, 5]
-            },
-            NASDAQ: {
-                name: 'NASDAQ',
-                timezone: 'America/New_York',
-                country: '🇺🇸',
-                hours: [
-                    { start: '09:30', end: '16:00' }
-                ],
-                weekdays: [1, 2, 3, 4, 5]
-            },
-            LSE: {
-                name: 'London Stock Exchange',
-                timezone: 'Europe/London',
-                country: '🇬🇧',
-                hours: [
-                    { start: '08:00', end: '16:30' }
-                ],
-                weekdays: [1, 2, 3, 4, 5]
-            },
-            HKEX: {
-                name: 'Hong Kong Exchange',
-                timezone: 'Asia/Hong_Kong',
-                country: '🇭🇰',
-                hours: [
-                    { start: '09:30', end: '12:00' },
-                    { start: '13:00', end: '16:00' }
-                ],
-                weekdays: [1, 2, 3, 4, 5]
-            },
-            TSE: {
-                name: 'Tokyo Stock Exchange',
-                timezone: 'Asia/Tokyo',
-                country: '🇯🇵',
-                hours: [
-                    { start: '09:00', end: '11:30' },
-                    { start: '12:30', end: '15:25' }
-                ],
-                weekdays: [1, 2, 3, 4, 5]
-            },
-            SSE: {
-                name: 'Shanghai Stock Exchange',
-                timezone: 'Asia/Shanghai',
-                country: '🇨🇳',
-                hours: [
-                    { start: '09:30', end: '11:30' },
-                    { start: '13:00', end: '14:57' }
-                ],
-                weekdays: [1, 2, 3, 4, 5]
-            }
+        // Mock data and functionality
+        const markets = [
+            { name: 'NYSE', timezone: 'America/New_York', openTime: '09:30', closeTime: '16:00' },
+            { name: 'NASDAQ', timezone: 'America/New_York', openTime: '09:30', closeTime: '16:00' },
+            { name: 'LSE', timezone: 'Europe/London', openTime: '08:00', closeTime: '16:30' },
+            { name: 'TSE', timezone: 'Asia/Tokyo', openTime: '09:00', closeTime: '15:00' },
+            { name: 'SGX', timezone: 'Asia/Singapore', openTime: '09:00', closeTime: '17:00' },
+            { name: 'HKEX', timezone: 'Asia/Hong_Kong', openTime: '09:30', closeTime: '16:00' }
+        ];
+
+        const stocks = [
+            { symbol: 'AAPL', name: 'Apple Inc.', price: 175.43, change: 2.15, shares: 10 },
+            { symbol: 'GOOGL', name: 'Alphabet Inc.', price: 2847.63, change: -15.32, shares: 5 },
+            { symbol: 'MSFT', name: 'Microsoft Corp.', price: 378.85, change: 5.21, shares: 8 },
+            { symbol: 'TSLA', name: 'Tesla Inc.', price: 248.50, change: -8.75, shares: 3 }
+        ];
+
+        const exchangeRates = {
+            'USD': { 'EUR': 0.85, 'GBP': 0.73, 'JPY': 110, 'SGD': 1.35 },
+            'EUR': { 'USD': 1.18, 'GBP': 0.86, 'JPY': 129, 'SGD': 1.59 },
+            'GBP': { 'USD': 1.37, 'EUR': 1.16, 'JPY': 150, 'SGD': 1.85 },
+            'JPY': { 'USD': 0.009, 'EUR': 0.008, 'GBP': 0.007, 'SGD': 0.012 },
+            'SGD': { 'USD': 0.74, 'EUR': 0.63, 'GBP': 0.54, 'JPY': 81 }
         };
 
-        class MarketStatus {
-            constructor() {
-                this.updateInterval = null;
-                this.init();
-            }
-
-            init() {
-                this.updateMarketStatus();
-                this.updateInterval = setInterval(() => {
-                    this.updateMarketStatus();
-                }, 30000);
-            }
-
-            isMarketOpen(marketKey) {
-                const market = MARKETS[marketKey];
-                if (!market) return false;
-
-                try {
-                    const now = new Date();
-                    const marketTime = new Date(now.toLocaleString("en-US", {timeZone: market.timezone}));
-                    const dayOfWeek = marketTime.getDay();
-                    
-                    if (!market.weekdays.includes(dayOfWeek)) {
-                        return false;
-                    }
-
-                    const currentTime = marketTime.getHours() * 60 + marketTime.getMinutes();
-                    
-                    for (const session of market.hours) {
-                        const [startHour, startMin] = session.start.split(':').map(Number);
-                        const [endHour, endMin] = session.end.split(':').map(Number);
-                        
-                        const startTime = startHour * 60 + startMin;
-                        const endTime = endHour * 60 + endMin;
-                        
-                        if (currentTime >= startTime && currentTime <= endTime) {
-                            return true;
-                        }
-                    }
-                    
-                    return false;
-                } catch (error) {
-                    console.error(`Error checking market status for ${marketKey}:`, error);
-                    return false;
-                }
-            }
-
-            getMarketTime(marketKey) {
-                const market = MARKETS[marketKey];
-                if (!market) return 'N/A';
-
-                try {
-                    const now = new Date();
-                    const marketTime = new Date(now.toLocaleString("en-US", {timeZone: market.timezone}));
-                    
-                    return marketTime.toLocaleTimeString('en-US', {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        hour12: false
-                    });
-                } catch (error) {
-                    console.error(`Error getting market time for ${marketKey}:`, error);
-                    return 'N/A';
-                }
-            }
-
-            getNextSession(marketKey) {
-                const market = MARKETS[marketKey];
-                if (!market) return null;
-
-                try {
-                    const now = new Date();
-                    const marketTime = new Date(now.toLocaleString("en-US", {timeZone: market.timezone}));
-                    const currentTime = marketTime.getHours() * 60 + marketTime.getMinutes();
-                    
-                    for (const session of market.hours) {
-                        const [startHour, startMin] = session.start.split(':').map(Number);
-                        const startTime = startHour * 60 + startMin;
-                        
-                        if (currentTime < startTime) {
-                            return `Opens at ${session.start}`;
-                        }
-                    }
-                    
-                    const firstSession = market.hours[0];
-                    return `Opens tomorrow at ${firstSession.start}`;
-                } catch (error) {
-                    console.error(`Error getting next session for ${marketKey}:`, error);
-                    return null;
-                }
-            }
-
-            updateMarketStatus() {
-                const marketsGrid = document.getElementById('marketsGrid');
-                if (!marketsGrid) return;
-
-                marketsGrid.innerHTML = '';
-
-                Object.entries(MARKETS).forEach(([key, market]) => {
-                    const isOpen = this.isMarketOpen(key);
-                    const marketTime = this.getMarketTime(key);
-                    const nextSession = this.getNextSession(key);
-
-                    const marketCard = document.createElement('div');
-                    marketCard.className = `market-card ${isOpen ? 'open' : 'closed'}`;
-                    
-                    marketCard.innerHTML = `
-                        <h3>${market.country} ${market.name}</h3>
-                        <div class="market-status">
-                            <div class="status-indicator ${isOpen ? 'open' : 'closed'}"></div>
-                            <span>${isOpen ? 'Open' : 'Closed'}</span>
-                        </div>
-                        <div class="market-time">
-                            Local time: ${marketTime}
-                        </div>
-                        ${!isOpen && nextSession ? `<div class="market-time">${nextSession}</div>` : ''}
-                    `;
-                    
-                    marketsGrid.appendChild(marketCard);
-                });
-            }
-
-            destroy() {
-                if (this.updateInterval) {
-                    clearInterval(this.updateInterval);
-                }
-            }
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent = now.toLocaleTimeString();
+            document.getElementById('update-time').textContent = now.toLocaleTimeString();
         }
 
-        class PortfolioManager {
-            constructor() {
-                this.portfolio = [];
-                this.baseCurrency = 'USD';
-                this.exchangeRates = {
-                    USD: 1.0,
-                    EUR: 0.85,
-                    GBP: 0.73,
-                    JPY: 110.0,
-                    SGD: 1.35,
-                    HKD: 7.8
-                };
-                this.priceUpdateInterval = null;
-                this.init();
+        function isMarketOpen(market) {
+            const now = new Date();
+            const dayOfWeek = now.getDay();
+            
+            // Weekend check
+            if (dayOfWeek === 0 || dayOfWeek === 6) {
+                return 'weekend';
             }
-
-            init() {
-                this.loadPortfolio();
-                this.setupEventListeners();
-                this.updatePortfolioDisplay();
-                this.startPriceUpdates();
+            
+            // Simple time check (would need proper timezone handling in real app)
+            const currentHour = now.getHours();
+            const openHour = parseInt(market.openTime.split(':')[0]);
+            const closeHour = parseInt(market.closeTime.split(':')[0]);
+            
+            if (currentHour >= openHour && currentHour < closeHour) {
+                return 'open';
             }
-
-            setupEventListeners() {
-                const addStockBtn = document.getElementById('addStockBtn');
-                const sampleDataBtn = document.getElementById('sampleDataBtn');
-                const addStockModal = document.getElementById('addStockModal');
-                const closeModal = document.querySelector('.close');
-                const addStockForm = document.getElementById('addStockForm');
-                const baseCurrencySelect = document.getElementById('baseCurrency');
-
-                if (addStockBtn) {
-                    addStockBtn.addEventListener('click', () => {
-                        addStockModal.style.display = 'block';
-                    });
-                }
-
-                if (sampleDataBtn) {
-                    sampleDataBtn.addEventListener('click', () => {
-                        this.addSampleData();
-                    });
-                }
-
-                if (closeModal) {
-                    closeModal.addEventListener('click', () => {
-                        addStockModal.style.display = 'none';
-                    });
-                }
-
-                if (addStockModal) {
-                    addStockModal.addEventListener('click', (e) => {
-                        if (e.target === addStockModal) {
-                            addStockModal.style.display = 'none';
-                        }
-                    });
-                }
-
-                if (addStockForm) {
-                    addStockForm.addEventListener('submit', (e) => {
-                        e.preventDefault();
-                        this.addStock();
-                    });
-                }
-
-                if (baseCurrencySelect) {
-                    baseCurrencySelect.addEventListener('change', (e) => {
-                        this.baseCurrency = e.target.value;
-                        this.updatePortfolioDisplay();
-                    });
-                }
-            }
-
-            addStock() {
-                const symbol = document.getElementById('stockSymbol').value.toUpperCase();
-                const quantity = parseFloat(document.getElementById('stockQuantity').value);
-                const price = parseFloat(document.getElementById('stockPrice').value);
-                const currency = document.getElementById('stockCurrency').value;
-
-                if (!symbol || !quantity || !price) {
-                    alert('Please fill in all fields');
-                    return;
-                }
-
-                const stock = {
-                    id: Date.now(),
-                    symbol,
-                    quantity,
-                    purchasePrice: price,
-                    currency,
-                    currentPrice: this.generateRandomPrice(price),
-                    dateAdded: new Date().toISOString()
-                };
-
-                this.portfolio.push(stock);
-                this.savePortfolio();
-                this.updatePortfolioDisplay();
-                
-                document.getElementById('addStockModal').style.display = 'none';
-                document.getElementById('addStockForm').reset();
-            }
-
-            generateRandomPrice(basePrice) {
-                const variation = (Math.random() - 0.5) * 0.2;
-                return basePrice * (1 + variation);
-            }
-
-            startPriceUpdates() {
-                this.priceUpdateInterval = setInterval(() => {
-                    this.portfolio.forEach(stock => {
-                        const volatility = 0.02;
-                        const change = (Math.random() - 0.5) * volatility;
-                        stock.currentPrice = Math.max(0.01, stock.currentPrice * (1 + change));
-                    });
-                    this.updatePortfolioDisplay();
-                }, 5000);
-            }
-
-            convertCurrency(amount, fromCurrency, toCurrency) {
-                if (fromCurrency === toCurrency) return amount;
-                
-                const usdAmount = amount / this.exchangeRates[fromCurrency];
-                return usdAmount * this.exchangeRates[toCurrency];
-            }
-
-            calculateProfitLoss(stock) {
-                const currentValue = stock.currentPrice * stock.quantity;
-                const purchaseValue = stock.purchasePrice * stock.quantity;
-                const profitLoss = currentValue - purchaseValue;
-                const profitLossPercentage = (profitLoss / purchaseValue) * 100;
-                
-                return {
-                    absolute: profitLoss,
-                    percentage: profitLossPercentage,
-                    currentValue,
-                    purchaseValue
-                };
-            }
-
-            calculatePortfolioSummary() {
-                if (this.portfolio.length === 0) return null;
-
-                let totalCurrentValue = 0;
-                let totalPurchaseValue = 0;
-                let totalProfitLoss = 0;
-
-                this.portfolio.forEach(stock => {
-                    const profitLoss = this.calculateProfitLoss(stock);
-                    const currentValueInBase = this.convertCurrency(
-                        profitLoss.currentValue, 
-                        stock.currency, 
-                        this.baseCurrency
-                    );
-                    const purchaseValueInBase = this.convertCurrency(
-                        profitLoss.purchaseValue, 
-                        stock.currency, 
-                        this.baseCurrency
-                    );
-                    
-                    totalCurrentValue += currentValueInBase;
-                    totalPurchaseValue += purchaseValueInBase;
-                });
-
-                totalProfitLoss = totalCurrentValue - totalPurchaseValue;
-                const totalProfitLossPercentage = (totalProfitLoss / totalPurchaseValue) * 100;
-
-                return {
-                    totalCurrentValue,
-                    totalPurchaseValue,
-                    totalProfitLoss,
-                    totalProfitLossPercentage,
-                    stockCount: this.portfolio.length
-                };
-            }
-
-            removeStock(stockId) {
-                this.portfolio = this.portfolio.filter(stock => stock.id !== stockId);
-                this.savePortfolio();
-                this.updatePortfolioDisplay();
-            }
-
-            updatePortfolioDisplay() {
-                const portfolioGrid = document.getElementById('portfolioGrid');
-                const portfolioSummary = document.getElementById('portfolioSummary');
-                const summaryGrid = document.getElementById('summaryGrid');
-                
-                if (!portfolioGrid) return;
-
-                if (this.portfolio.length === 0) {
-                    portfolioGrid.innerHTML = `
-                        <div class="empty-state">
-                            <h3>No stocks in portfolio</h3>
-                            <p>Click "Add Stock" to get started tracking your investments</p>
-                        </div>
-                    `;
-                    portfolioSummary.style.display = 'none';
-                    return;
-                }
-
-                // Update summary
-                const summary = this.calculatePortfolioSummary();
-                if (summary && summaryGrid) {
-                    portfolioSummary.style.display = 'block';
-                    const profitLossClass = summary.totalProfitLoss >= 0 ? 'profit-positive' : 'profit-negative';
-                    const profitLossSign = summary.totalProfitLoss >= 0 ? '+' : '';
-                    
-                    summaryGrid.innerHTML = `
-                        <div class="summary-item">
-                            <span>Total Stocks</span>
-                            <strong>${summary.stockCount}</strong>
-                        </div>
-                        <div class="summary-item">
-                            <span>Current Value</span>
-                            <strong>${summary.totalCurrentValue.toFixed(2)} ${this.baseCurrency}</strong>
-                        </div>
-                        <div class="summary-item">
-                            <span>Purchase Value</span>
-                            <strong>${summary.totalPurchaseValue.toFixed(2)} ${this.baseCurrency}</strong>
-                        </div>
-                        <div class="summary-item">
-                            <span>Total P&L</span>
-                            <strong<strong class="${profitLossClass}">${profitLossSign}${summary.totalProfitLoss.toFixed(2)} ${this.baseCurrency}</strong>
-                        </div>
-                        <div class="summary-item">
-                            <span>Total P&L %</span>
-                            <strong class="${profitLossClass}">${profitLossSign}${summary.totalProfitLossPercentage.toFixed(2)}%</strong>
-                        </div>
-                    `;
-                }
-
-                // Update portfolio items
-                portfolioGrid.innerHTML = this.portfolio.map(stock => {
-                    const profitLoss = this.calculateProfitLoss(stock);
-                    const profitLossClass = profitLoss.absolute >= 0 ? 'profit-positive' : 'profit-negative';
-                    const profitLossSign = profitLoss.absolute >= 0 ? '+' : '';
-                    
-                    const currentValueInBase = this.convertCurrency(
-                        profitLoss.currentValue, 
-                        stock.currency, 
-                        this.baseCurrency
-                    );
-                    const purchaseValueInBase = this.convertCurrency(
-                        profitLoss.purchaseValue, 
-                        stock.currency, 
-                        this.baseCurrency
-                    );
-                    const profitLossInBase = this.convertCurrency(
-                        profitLoss.absolute, 
-                        stock.currency, 
-                        this.baseCurrency
-                    );
-                    
-                    return `
-                        <div class="portfolio-item">
-                            <h3>${stock.symbol}</h3>
-                            <div class="portfolio-details">
-                                <span>Quantity:</span>
-                                <strong>${stock.quantity}</strong>
-                                
-                                <span>Purchase Price:</span>
-                                <strong>${stock.purchasePrice.toFixed(2)} ${stock.currency}</strong>
-                                
-                                <span>Current Price:</span>
-                                <strong>${stock.currentPrice.toFixed(2)} ${stock.currency}</strong>
-                                
-                                <span>Current Value:</span>
-                                <strong>${currentValueInBase.toFixed(2)} ${this.baseCurrency}</strong>
-                                
-                                <span>Purchase Value:</span>
-                                <strong>${purchaseValueInBase.toFixed(2)} ${this.baseCurrency}</strong>
-                                
-                                <span>P&L:</span>
-                                <strong class="${profitLossClass}">${profitLossSign}${profitLossInBase.toFixed(2)} ${this.baseCurrency}</strong>
-                                
-                                <span>P&L %:</span>
-                                <strong class="${profitLossClass}">${profitLossSign}${profitLoss.percentage.toFixed(2)}%</strong>
-                                
-                                <span>Currency:</span>
-                                <strong>${stock.currency}</strong>
-                            </div>
-                            <button onclick="portfolioManager.removeStock(${stock.id})" class="btn secondary" style="margin-top: 15px; width: 100%;">Remove</button>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            addSampleData() {
-                const sampleStocks = [
-                    {
-                        id: Date.now() + 1,
-                        symbol: 'AAPL',
-                        quantity: 10,
-                        purchasePrice: 150.00,
-                        currency: 'USD',
-                        currentPrice: 155.50,
-                        dateAdded: new Date().toISOString()
-                    },
-                    {
-                        id: Date.now() + 2,
-                        symbol: 'GOOGL',
-                        quantity: 5,
-                        purchasePrice: 2800.00,
-                        currency: 'USD',
-                        currentPrice: 2750.00,
-                        dateAdded: new Date().toISOString()
-                    },
-                    {
-                        id: Date.now() + 3,
-                        symbol: 'ASML',
-                        quantity: 2,
-                        purchasePrice: 650.00,
-                        currency: 'EUR',
-                        currentPrice: 680.00,
-                        dateAdded: new Date().toISOString()
-                    },
-                    {
-                        id: Date.now() + 4,
-                        symbol: 'TSLA',
-                        quantity: 8,
-                        purchasePrice: 200.00,
-                        currency: 'USD',
-                        currentPrice: 195.00,
-                        dateAdded: new Date().toISOString()
-                    }
-                ];
-
-                this.portfolio = [...this.portfolio, ...sampleStocks];
-                this.savePortfolio();
-                this.updatePortfolioDisplay();
-            }
-
-            savePortfolio() {
-                // Note: In a real application, you would save to a backend service
-                // For demo purposes, we'll just keep it in memory
-                console.log('Portfolio saved:', this.portfolio);
-            }
-
-            loadPortfolio() {
-                // Note: In a real application, you would load from a backend service
-                // For demo purposes, we'll start with an empty portfolio
-                this.portfolio = [];
-            }
-
-            destroy() {
-                if (this.priceUpdateInterval) {
-                    clearInterval(this.priceUpdateInterval);
-                }
-            }
+            return 'closed';
         }
 
-        // Initialize the application
-        let marketStatus;
-        let portfolioManager;
+        function updateMarketStatus() {
+            const marketsGrid = document.getElementById('markets-grid');
+            marketsGrid.innerHTML = '';
+            
+            markets.forEach(market => {
+                const status = isMarketOpen(market);
+                const marketItem = document.createElement('div');
+                marketItem.className = `market-item ${status}`;
+                
+                let statusText = status.charAt(0).toUpperCase() + status.slice(1);
+                let statusClass = `status-${status}`;
+                
+                marketItem.innerHTML = `
+                    <div class="market-name">${market.name}</div>
+                    <div class="market-status-badge ${statusClass}">${statusText}</div>
+                `;
+                
+                marketsGrid.appendChild(marketItem);
+            });
+        }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            marketStatus = new MarketStatus();
-            portfolioManager = new PortfolioManager();
-        });
+        function updatePortfolioSummary() {
+            const totalValue = stocks.reduce((sum, stock) => sum + (stock.price * stock.shares), 0);
+            const dailyChange = stocks.reduce((sum, stock) => sum + (stock.change * stock.shares), 0);
+            
+            document.getElementById('total-value').textContent = `$${totalValue.toFixed(2)}`;
+            document.getElementById('daily-change').textContent = `${dailyChange >= 0 ? '+' : ''}$${dailyChange.toFixed(2)}`;
+            document.getElementById('daily-change').className = `summary-value ${dailyChange >= 0 ? 'positive' : 'negative'}`;
+            document.getElementById('total-stocks').textContent = stocks.length;
+            document.getElementById('currencies').textContent = '5';
+        }
 
-        // Cleanup on page unload
-        window.addEventListener('beforeunload', () => {
-            if (marketStatus) {
-                marketStatus.destroy();
+        function updateStocksList() {
+            const stocksList = document.getElementById('stocks-list');
+            stocksList.innerHTML = '';
+            
+            stocks.forEach(stock => {
+                const stockItem = document.createElement('div');
+                stockItem.className = 'stock-item';
+                
+                stockItem.innerHTML = `
+                    <div class="stock-info">
+                        <div class="stock-symbol">${stock.symbol}</div>
+                        <div class="stock-name">${stock.name}</div>
+                    </div>
+                    <div class="stock-price">
+                        <div>$${stock.price.toFixed(2)}</div>
+                        <div class="stock-change ${stock.change >= 0 ? 'positive' : 'negative'}">
+                            ${stock.change >= 0 ? '+' : ''}${stock.change.toFixed(2)}
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div>Shares: ${stock.shares}</div>
+                        <div style="font-weight: bold;">$${(stock.price * stock.shares).toFixed(2)}</div>
+                    </div>
+                `;
+                
+                stocksList.appendChild(stockItem);
+            });
+        }
+
+        function convertCurrency() {
+            const fromAmount = parseFloat(document.getElementById('from-amount').value);
+            const fromCurrency = document.getElementById('from-currency').value;
+            const toCurrency = document.getElementById('to-currency').value;
+            
+            if (fromCurrency === toCurrency) {
+                document.getElementById('to-amount').value = fromAmount.toFixed(2);
+                return;
             }
-            if (portfolioManager) {
-                portfolioManager.destroy();
+            
+            const rate = exchangeRates[fromCurrency][toCurrency];
+            const result = fromAmount * rate;
+            document.getElementById('to-amount').value = result.toFixed(2);
+        }
+
+        function addStock() {
+            const symbol = document.getElementById('stock-symbol').value.toUpperCase();
+            const shares = parseInt(document.getElementById('stock-shares').value);
+            
+            if (!symbol || !shares) {
+                alert('Please enter both stock symbol and number of shares');
+                return;
             }
-        });
+            
+            // Mock stock data (in real app, would fetch from API)
+            const newStock = {
+                symbol: symbol,
+                name: symbol + ' Corp.',
+                price: Math.random() * 200 + 50,
+                change: (Math.random() - 0.5) * 20,
+                shares: shares
+            };
+            
+            stocks.push(newStock);
+            updateStocksList();
+            updatePortfolioSummary();
+            
+            // Clear form
+            document.getElementById('stock-symbol').value = '';
+            document.getElementById('stock-shares').value = '';
+        }
+
+        // Initialize dashboard
+        function init() {
+            updateTime();
+            updateMarketStatus();
+            updatePortfolioSummary();
+            updateStocksList();
+            
+            // Update time every second
+            setInterval(updateTime, 1000);
+            
+            // Update market status every minute
+            setInterval(updateMarketStatus, 60000);
+        }
+
+        // Start the application
+        init();
     </script>
 </body>
 </html>
