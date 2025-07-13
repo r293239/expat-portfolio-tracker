@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌍 Expat Portfolio Tracker</title>
+    
+    <!-- Google AdSense - Replace with your actual publisher ID -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+            crossorigin="anonymous"></script>
+    
     <style>
         * {
             margin: 0;
@@ -50,11 +55,58 @@
             gap: 1rem;
         }
 
-        /* Dashboard Grid */
+        /* Google Ad Styles */
+        .ad-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e1e8ed;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .ad-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .banner-ad {
+            width: 100%;
+            max-width: 728px;
+            height: 90px;
+            margin: 0 auto;
+        }
+
+        .rectangle-ad {
+            width: 100%;
+            max-width: 336px;
+            height: 280px;
+            margin: 0 auto;
+        }
+
+        .square-ad {
+            width: 100%;
+            max-width: 250px;
+            height: 250px;
+            margin: 0 auto;
+        }
+
+        .sidebar-ad {
+            width: 100%;
+            max-width: 160px;
+            height: 600px;
+            margin: 0 auto;
+        }
+
+        /* Dashboard Grid with Ad Spaces */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto auto auto;
+            grid-template-rows: auto auto auto auto;
             gap: 2rem;
             margin-bottom: 2rem;
         }
@@ -69,7 +121,7 @@
 
         .box-header {
             display: flex;
-            justify-content: between;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
             padding-bottom: 0.5rem;
@@ -301,6 +353,24 @@
             background: #218838;
         }
 
+        /* Content with Sidebar Layout */
+        .content-with-sidebar {
+            display: grid;
+            grid-template-columns: 1fr 200px;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .dashboard-grid {
@@ -317,6 +387,14 @@
 
             .add-stock-form {
                 grid-template-columns: 1fr;
+            }
+
+            .content-with-sidebar {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                order: -1;
             }
         }
 
@@ -452,6 +530,214 @@
                     <span>|</span>
                     <span id="current-time"></span>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Banner Ad -->
+    <div class="container">
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <ins class="adsbygoogle banner-ad"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-with-sidebar">
+            <div class="main-content">
+                <div class="dashboard-grid">
+                    <!-- Market Status Box -->
+                    <div class="dashboard-box market-status">
+                        <div class="box-header">
+                            <div class="box-title">Global Market Status</div>
+                            <div id="last-updated">Last updated: <span id="update-time"></span></div>
+                        </div>
+                        <div class="markets-grid" id="markets-grid">
+                            <!-- Market items will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Summary Box -->
+                    <div class="dashboard-box">
+                        <div class="box-header">
+                            <div class="box-title">Portfolio Summary</div>
+                        </div>
+                        <div class="portfolio-summary">
+                            <div class="summary-item">
+                                <div class="summary-value" id="total-value">$0.00</div>
+                                <div class="summary-label">Total Portfolio Value</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-value positive" id="daily-change">+$0.00</div>
+                                <div class="summary-label">Daily Change</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-value" id="total-stocks">0</div>
+                                <div class="summary-label">Total Stocks</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-value" id="currencies">0</div>
+                                <div class="summary-label">Currencies</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Currency Converter Box -->
+                    <div class="dashboard-box">
+                        <div class="box-header">
+                            <div class="box-title">Currency Converter</div>
+                        </div>
+                        <div class="currency-converter">
+                            <div class="currency-input">
+                                <label>From</label>
+                                <input type="number" id="from-amount" placeholder="Amount" value="1">
+                                <select id="from-currency">
+                                    <option value="USD">USD</option>
+                                    <option value="EUR">EUR</option>
+                                    <option value="GBP">GBP</option>
+                                    <option value="JPY">JPY</option>
+                                    <option value="SGD">SGD</option>
+                                </select>
+                            </div>
+                            <button class="convert-btn" onclick="convertCurrency()">Convert</button>
+                            <div class="currency-input">
+                                <label>To</label>
+                                <input type="number" id="to-amount" placeholder="Result" readonly>
+                                <select id="to-currency">
+                                    <option value="EUR">EUR</option>
+                                    <option value="USD">USD</option>
+                                    <option value="GBP">GBP</option>
+                                    <option value="JPY">JPY</option>
+                                    <option value="SGD">SGD</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rectangle Ad in Content -->
+                    <div class="ad-container">
+                        <div class="ad-label">Advertisement</div>
+                        <ins class="adsbygoogle rectangle-ad"
+                             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                             data-ad-slot="2345678901"
+                             data-ad-format="rectangle"></ins>
+                    </div>
+
+                    <!-- Overall Stock Market Chart Box -->
+                    <div class="dashboard-box">
+                        <div class="box-header">
+                            <div class="box-title">Market Overview - S&P 500</div>
+                        </div>
+                        <div class="chart-container">
+                            <svg class="line-chart" viewBox="0 0 500 250">
+                                <defs>
+                                    <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#007bff;stop-opacity:0.3" />
+                                        <stop offset="100%" style="stop-color:#007bff;stop-opacity:0" />
+                                    </linearGradient>
+                                </defs>
+                                
+                                <!-- Grid lines -->
+                                <g class="chart-grid" stroke="#e9ecef" stroke-width="1">
+                                    <line x1="50" y1="40" x2="450" y2="40" />
+                                    <line x1="50" y1="90" x2="450" y2="90" />
+                                    <line x1="50" y1="140" x2="450" y2="140" />
+                                    <line x1="50" y1="190" x2="450" y2="190" />
+                                    <line x1="100" y1="30" x2="100" y2="200" />
+                                    <line x1="200" y1="30" x2="200" y2="200" />
+                                    <line x1="300" y1="30" x2="300" y2="200" />
+                                    <line x1="400" y1="30" x2="400" y2="200" />
+                                </g>
+                                
+                                <!-- Y-axis labels (values) -->
+                                <g class="chart-axis">
+                                    <text x="45" y="45" text-anchor="end">$4,200</text>
+                                    <text x="45" y="95" text-anchor="end">$4,000</text>
+                                    <text x="45" y="145" text-anchor="end">$3,800</text>
+                                    <text x="45" y="195" text-anchor="end">$3,600</text>
+                                </g>
+                                
+                                <!-- X-axis labels (dates) -->
+                                <g class="chart-axis">
+                                    <text x="100" y="220" text-anchor="middle">Jan 2024</text>
+                                    <text x="200" y="220" text-anchor="middle">Apr 2024</text>
+                                    <text x="300" y="220" text-anchor="middle">Jul 2024</text>
+                                    <text x="400" y="220" text-anchor="middle">Oct 2024</text>
+                                </g>
+                                
+                                <!-- Chart area fill -->
+                                <path class="chart-area" d="M50,180 L100,160 L150,140 L200,120 L250,100 L300,110 L350,90 L400,70 L450,60 L450,200 L50,200 Z" fill="url(#areaGradient)" />
+                                
+                                <!-- Chart line -->
+                                <path class="chart-line" d="M50,180 L100,160 L150,140 L200,120 L250,100 L300,110 L350,90 L400,70 L450,60" />
+                                
+                                <!-- Data points -->
+                                <circle class="chart-point" cx="50" cy="180" r="3" />
+                                <circle class="chart-point" cx="100" cy="160" r="3" />
+                                <circle class="chart-point" cx="150" cy="140" r="3" />
+                                <circle class="chart-point" cx="200" cy="120" r="3" />
+                                <circle class="chart-point" cx="250" cy="100" r="3" />
+                                <circle class="chart-point" cx="300" cy="110" r="3" />
+                                <circle class="chart-point" cx="350" cy="90" r="3" />
+                                <circle class="chart-point" cx="400" cy="70" r="3" />
+                                <circle class="chart-point" cx="450" cy="60" r="3" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Individual Stocks Box -->
+                    <div class="dashboard-box">
+                        <div class="box-header">
+                            <div class="box-title">Individual Stocks</div>
+                        </div>
+                        <div class="add-stock-form">
+                            <input type="text" id="stock-symbol" placeholder="Stock Symbol (e.g., AAPL)">
+                            <input type="number" id="stock-shares" placeholder="Number of Shares">
+                            <button class="add-btn" onclick="addStock()">Add Stock</button>
+                        </div>
+                        <div class="stocks-list" id="stocks-list">
+                            <!-- Stock items will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar with ads -->
+            <div class="sidebar">
+                <div class="ad-container">
+                    <div class="ad-label">Advertisement</div>
+                    <ins class="adsbygoogle square-ad"
+                         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                         data-ad-slot="3456789012"
+                         data-ad-format="square"></ins>
+                </div>
+
+                <div class="ad-container">
+                    <div class="ad-label">Advertisement</div>
+                    <ins class="adsbygoogle square-ad"
+                         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                         data-ad-slot="4567890123"
+                         data-ad-format="square"></ins>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Banner Ad -->
+    <div class="container">
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <ins class="adsbygoogle banner-ad"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="5678901234"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </div>
 
     <!-- Advertisement Section -->
     <div class="ad-section">
@@ -478,158 +764,6 @@
                 <button class="cta-button" onclick="alert('Coming soon! Premium features will be available shortly.')">
                     Upgrade to Premium
                 </button>
-            </div>
-        </div>
-    </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="dashboard-grid">
-            <!-- Market Status Box -->
-            <div class="dashboard-box market-status">
-                <div class="box-header">
-                    <div class="box-title">Global Market Status</div>
-                    <div id="last-updated">Last updated: <span id="update-time"></span></div>
-                </div>
-                <div class="markets-grid" id="markets-grid">
-                    <!-- Market items will be populated by JavaScript -->
-                </div>
-            </div>
-
-            <!-- Portfolio Summary Box -->
-            <div class="dashboard-box">
-                <div class="box-header">
-                    <div class="box-title">Portfolio Summary</div>
-                </div>
-                <div class="portfolio-summary">
-                    <div class="summary-item">
-                        <div class="summary-value" id="total-value">$0.00</div>
-                        <div class="summary-label">Total Portfolio Value</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-value positive" id="daily-change">+$0.00</div>
-                        <div class="summary-label">Daily Change</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-value" id="total-stocks">0</div>
-                        <div class="summary-label">Total Stocks</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-value" id="currencies">0</div>
-                        <div class="summary-label">Currencies</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Currency Converter Box -->
-            <div class="dashboard-box">
-                <div class="box-header">
-                    <div class="box-title">Currency Converter</div>
-                </div>
-                <div class="currency-converter">
-                    <div class="currency-input">
-                        <label>From</label>
-                        <input type="number" id="from-amount" placeholder="Amount" value="1">
-                        <select id="from-currency">
-                            <option value="USD">USD</option>
-                            <option value="EUR">EUR</option>
-                            <option value="GBP">GBP</option>
-                            <option value="JPY">JPY</option>
-                            <option value="SGD">SGD</option>
-                        </select>
-                    </div>
-                    <button class="convert-btn" onclick="convertCurrency()">Convert</button>
-                    <div class="currency-input">
-                        <label>To</label>
-                        <input type="number" id="to-amount" placeholder="Result" readonly>
-                        <select id="to-currency">
-                            <option value="EUR">EUR</option>
-                            <option value="USD">USD</option>
-                            <option value="GBP">GBP</option>
-                            <option value="JPY">JPY</option>
-                            <option value="SGD">SGD</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Overall Stock Market Chart Box -->
-            <div class="dashboard-box">
-                <div class="box-header">
-                    <div class="box-title">Market Overview - S&P 500</div>
-                </div>
-                <div class="chart-container">
-                    <svg class="line-chart" viewBox="0 0 500 250">
-                        <defs>
-                            <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" style="stop-color:#007bff;stop-opacity:0.3" />
-                                <stop offset="100%" style="stop-color:#007bff;stop-opacity:0" />
-                            </linearGradient>
-                        </defs>
-                        
-                        <!-- Grid lines -->
-                        <g class="chart-grid" stroke="#e9ecef" stroke-width="1">
-                            <line x1="50" y1="40" x2="450" y2="40" />
-                            <line x1="50" y1="90" x2="450" y2="90" />
-                            <line x1="50" y1="140" x2="450" y2="140" />
-                            <line x1="50" y1="190" x2="450" y2="190" />
-                            <line x1="100" y1="30" x2="100" y2="200" />
-                            <line x1="200" y1="30" x2="200" y2="200" />
-                            <line x1="300" y1="30" x2="300" y2="200" />
-                            <line x1="400" y1="30" x2="400" y2="200" />
-                        </g>
-                        
-                        <!-- Y-axis labels (values) -->
-                        <g class="chart-axis">
-                            <text x="45" y="45" text-anchor="end">$4,200</text>
-                            <text x="45" y="95" text-anchor="end">$4,000</text>
-                            <text x="45" y="145" text-anchor="end">$3,800</text>
-                            <text x="45" y="195" text-anchor="end">$3,600</text>
-                        </g>
-                        
-                        <!-- X-axis labels (dates) -->
-                        <g class="chart-axis">
-                            <text x="100" y="220" text-anchor="middle">Jan 2024</text>
-                            <text x="200" y="220" text-anchor="middle">Apr 2024</text>
-                            <text x="300" y="220" text-anchor="middle">Jul 2024</text>
-                            <text x="400" y="220" text-anchor="middle">Oct 2024</text>
-                        </g>
-                        
-                        <!-- Chart area fill -->
-                        <path class="chart-area" d="M50,180 L100,160 L150,140 L200,120 L250,100 L300,110 L350,90 L400,70 L450,60 L450,200 L50,200 Z" fill="url(#areaGradient)" />
-                        
-                        <!-- Chart line -->
-                        <path class="chart-line" d="M50,180 L100,160 L150,140 L200,120 L250,100 L300,110 L350,90 L400,70 L450,60" />
-                        
-                        <!-- Data points -->
-                        <circle class="chart-point" cx="50" cy="180" r="3" />
-                        <circle class="chart-point" cx="100" cy="160" r="3" />
-                        <circle class="chart-point" cx="150" cy="140" r="3" />
-                        <circle class="chart-point" cx="200" cy="120" r="3" />
-                        <circle class="chart-point" cx="250" cy="100" r="3" />
-                        <circle class="chart-point" cx="300" cy="110" r="3" />
-                        <circle class="chart-point" cx="350" cy="90" r="3" />
-                        <circle class="chart-point" cx="400" cy="70" r="3" />
-                        <circle class="chart-point" cx="450" cy="60" r="3" />
-                    </svg>
-                </div>
-            </div>
-
-            <!-- Individual Stocks Box -->
-            <div class="dashboard-box">
-                <div class="box-header">
-                    <div class="box-title">Individual Stocks</div>
-                </div>
-                <div class="add-stock-form">
-                    <input type="text" id="stock-symbol" placeholder="Stock Symbol (e.g., AAPL)">
-                    <input type="number" id="stock-shares" placeholder="Number of Shares">
-                    <button class="add-btn" onclick="addStock()">Add Stock</button>
-                </div>
-                <div class="stocks-list" id="stocks-list">
-                    <!-- Stock items will be populated by JavaScript -->
-                </div>
             </div>
         </div>
     </div>
@@ -711,25 +845,29 @@
             document.getElementById('daily-change').className = `summary-value ${dailyChange >= 0 ? 'positive' : 'negative'}`;
             document.getElementById('total-stocks').textContent = stocks.length;
             document.getElementById('currencies').textContent = '5';
-        }
+            }
 
         function updateStocksList() {
             const stocksList = document.getElementById('stocks-list');
-            stocksList.innerHTML = '';
             
             if (stocks.length === 0) {
                 stocksList.innerHTML = `
                     <div class="empty-state">
                         <h3>No stocks added yet</h3>
-                        <p>Start by adding your first stock using the form above</p>
+                        <p>Add your first stock using the form above</p>
                     </div>
                 `;
                 return;
             }
             
+            stocksList.innerHTML = '';
+            
             stocks.forEach((stock, index) => {
                 const stockItem = document.createElement('div');
                 stockItem.className = 'stock-item';
+                
+                const changeClass = stock.change >= 0 ? 'positive' : 'negative';
+                const changeSymbol = stock.change >= 0 ? '+' : '';
                 
                 stockItem.innerHTML = `
                     <div class="stock-info">
@@ -737,28 +875,75 @@
                         <div class="stock-name">${stock.name}</div>
                     </div>
                     <div class="stock-price">
-                        <div>${stock.price.toFixed(2)}</div>
-                        <div class="stock-change ${stock.change >= 0 ? 'positive' : 'negative'}">
-                            ${stock.change >= 0 ? '+' : ''}${stock.change.toFixed(2)}
-                        </div>
+                        <div>$${stock.price.toFixed(2)}</div>
+                        <div class="stock-change ${changeClass}">${changeSymbol}${stock.change.toFixed(2)}</div>
                     </div>
-                    <div style="text-align: right;">
-                        <div>Shares: ${stock.shares}</div>
-                        <div style="font-weight: bold;">${(stock.price * stock.shares).toFixed(2)}</div>
-                        <button class="delete-btn" onclick="deleteStock(${index})">Sell</button>
+                    <div>
+                        <div>${stock.shares} shares</div>
+                        <div class="stock-change">$${(stock.price * stock.shares).toFixed(2)}</div>
                     </div>
+                    <button class="delete-btn" onclick="removeStock(${index})">Delete</button>
                 `;
                 
                 stocksList.appendChild(stockItem);
             });
         }
 
-        function deleteStock(index) {
-            if (confirm(`Are you sure you want to sell ${stocks[index].symbol}?`)) {
-                stocks.splice(index, 1);
-                updateStocksList();
-                updatePortfolioSummary();
+        function addStock() {
+            const symbolInput = document.getElementById('stock-symbol');
+            const sharesInput = document.getElementById('stock-shares');
+            
+            const symbol = symbolInput.value.trim().toUpperCase();
+            const shares = parseInt(sharesInput.value);
+            
+            if (!symbol || !shares || shares <= 0) {
+                alert('Please enter a valid stock symbol and number of shares');
+                return;
             }
+            
+            // Check if stock already exists
+            if (stocks.find(stock => stock.symbol === symbol)) {
+                alert('Stock already exists in your portfolio');
+                return;
+            }
+            
+            // Mock stock data (in real app, this would come from an API)
+            const mockStocks = {
+                'AAPL': { name: 'Apple Inc.', price: 175.43, change: 2.15 },
+                'GOOGL': { name: 'Alphabet Inc.', price: 2743.88, change: -15.22 },
+                'MSFT': { name: 'Microsoft Corp.', price: 331.62, change: 1.85 },
+                'AMZN': { name: 'Amazon.com Inc.', price: 3372.20, change: -8.45 },
+                'TSLA': { name: 'Tesla Inc.', price: 1024.86, change: 45.23 },
+                'NVDA': { name: 'NVIDIA Corp.', price: 208.78, change: 3.42 },
+                'META': { name: 'Meta Platforms Inc.', price: 331.79, change: -2.18 },
+                'NFLX': { name: 'Netflix Inc.', price: 398.42, change: 7.65 }
+            };
+            
+            const stockData = mockStocks[symbol] || {
+                name: `${symbol} Corp.`,
+                price: Math.random() * 200 + 50,
+                change: (Math.random() - 0.5) * 20
+            };
+            
+            stocks.push({
+                symbol: symbol,
+                name: stockData.name,
+                price: stockData.price,
+                change: stockData.change,
+                shares: shares
+            });
+            
+            symbolInput.value = '';
+            sharesInput.value = '';
+            
+            updateStocksList();
+            updatePortfolioSummary();
+        }
+
+        function removeStock(index) {
+            stocks.splice(index, 1);
+            updateStocksList();
+            updatePortfolioSummary();
         }
 
         function convertCurrency() {
@@ -766,59 +951,84 @@
             const fromCurrency = document.getElementById('from-currency').value;
             const toCurrency = document.getElementById('to-currency').value;
             
+            if (!fromAmount || fromAmount <= 0) {
+                alert('Please enter a valid amount');
+                return;
+            }
+            
             if (fromCurrency === toCurrency) {
                 document.getElementById('to-amount').value = fromAmount.toFixed(2);
                 return;
             }
             
-            const rate = exchangeRates[fromCurrency][toCurrency];
+            let rate;
+            if (fromCurrency === 'USD') {
+                rate = exchangeRates['USD'][toCurrency];
+            } else if (toCurrency === 'USD') {
+                rate = exchangeRates[fromCurrency]['USD'];
+            } else {
+                // Convert through USD
+                const toUSD = exchangeRates[fromCurrency]['USD'];
+                const fromUSD = exchangeRates['USD'][toCurrency];
+                rate = toUSD * fromUSD;
+            }
+            
             const result = fromAmount * rate;
             document.getElementById('to-amount').value = result.toFixed(2);
         }
 
-        function addStock() {
-            const symbol = document.getElementById('stock-symbol').value.toUpperCase();
-            const shares = parseInt(document.getElementById('stock-shares').value);
-            
-            if (!symbol || !shares) {
-                alert('Please enter both stock symbol and number of shares');
-                return;
-            }
-            
-            // Mock stock data (in real app, would fetch from API)
-            const newStock = {
-                symbol: symbol,
-                name: symbol + ' Corp.',
-                price: Math.random() * 200 + 50,
-                change: (Math.random() - 0.5) * 20,
-                shares: shares
-            };
-            
-            stocks.push(newStock);
-            updateStocksList();
-            updatePortfolioSummary();
-            
-            // Clear form
-            document.getElementById('stock-symbol').value = '';
-            document.getElementById('stock-shares').value = '';
-        }
-
-        // Initialize dashboard
+        // Initialize the app
         function init() {
             updateTime();
             updateMarketStatus();
-            updatePortfolioSummary();
             updateStocksList();
+            updatePortfolioSummary();
             
             // Update time every second
             setInterval(updateTime, 1000);
             
             // Update market status every minute
             setInterval(updateMarketStatus, 60000);
+            
+            // Add sample stocks for demonstration
+            setTimeout(() => {
+                stocks.push(
+                    { symbol: 'AAPL', name: 'Apple Inc.', price: 175.43, change: 2.15, shares: 10 },
+                    { symbol: 'GOOGL', name: 'Alphabet Inc.', price: 2743.88, change: -15.22, shares: 2 },
+                    { symbol: 'MSFT', name: 'Microsoft Corp.', price: 331.62, change: 1.85, shares: 15 }
+                );
+                updateStocksList();
+                updatePortfolioSummary();
+            }, 1000);
+        }
+
+        // Initialize Google AdSense
+        function initializeAds() {
+            try {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            } catch (e) {
+                console.log('AdSense not loaded');
+            }
         }
 
         // Start the application
-        init();
+        window.addEventListener('load', () => {
+            init();
+            initializeAds();
+        });
+
+        // Handle Enter key in stock input
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                if (e.target.id === 'stock-symbol' || e.target.id === 'stock-shares') {
+                    addStock();
+                }
+            }
+        });
     </script>
 </body>
 </html>
