@@ -336,9 +336,109 @@
             fill: rgba(0, 123, 255, 0.1);
         }
 
-        .chart-grid {
-            stroke: #e9ecef;
-            stroke-width: 1;
+        /* Delete button */
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background-color 0.2s;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #6c757d;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+
+        /* Chart axes and labels */
+        .chart-axis {
+            font-size: 10px;
+            fill: #6c757d;
+        }
+
+        .chart-point {
+            fill: #007bff;
+            stroke: white;
+            stroke-width: 2;
+        }
+
+        /* Ad section */
+        .ad-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+
+        .ad-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .ad-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .ad-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .ad-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .ad-feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .ad-feature h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #ff6b6b, #ffa726);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
         }
     </style>
 </head>
@@ -352,6 +452,35 @@
                     <span>|</span>
                     <span id="current-time"></span>
                 </div>
+
+    <!-- Advertisement Section -->
+    <div class="ad-section">
+        <div class="container">
+            <div class="ad-content">
+                <h2>Take Your Portfolio to the Next Level</h2>
+                <p>Join thousands of expats who trust our platform for their international investments</p>
+                
+                <div class="ad-features">
+                    <div class="ad-feature">
+                        <h3>💰 Save on Forex Fees</h3>
+                        <p>Get access to expat-friendly cards and banking solutions to minimize currency conversion costs</p>
+                    </div>
+                    <div class="ad-feature">
+                        <h3>🏛️ Expert Tax Help</h3>
+                        <p>Connect with tax professionals who specialize in international investing and expat tax situations</p>
+                    </div>
+                    <div class="ad-feature">
+                        <h3>📊 Advanced Analytics</h3>
+                        <p>Get detailed performance reports and insights across multiple currencies and markets</p>
+                    </div>
+                </div>
+                
+                <button class="cta-button" onclick="alert('Coming soon! Premium features will be available shortly.')">
+                    Upgrade to Premium
+                </button>
+            </div>
+        </div>
+    </div>
             </div>
         </div>
     </div>
@@ -429,26 +558,61 @@
             <!-- Overall Stock Market Chart Box -->
             <div class="dashboard-box">
                 <div class="box-header">
-                    <div class="box-title">Market Overview</div>
+                    <div class="box-title">Market Overview - S&P 500</div>
                 </div>
                 <div class="chart-container">
-                    <svg class="line-chart" viewBox="0 0 400 200">
+                    <svg class="line-chart" viewBox="0 0 500 250">
                         <defs>
                             <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                                 <stop offset="0%" style="stop-color:#007bff;stop-opacity:0.3" />
                                 <stop offset="100%" style="stop-color:#007bff;stop-opacity:0" />
                             </linearGradient>
                         </defs>
-                        <g class="chart-grid">
-                            <line x1="0" y1="50" x2="400" y2="50" />
-                            <line x1="0" y1="100" x2="400" y2="100" />
-                            <line x1="0" y1="150" x2="400" y2="150" />
-                            <line x1="100" y1="0" x2="100" y2="200" />
-                            <line x1="200" y1="0" x2="200" y2="200" />
-                            <line x1="300" y1="0" x2="300" y2="200" />
+                        
+                        <!-- Grid lines -->
+                        <g class="chart-grid" stroke="#e9ecef" stroke-width="1">
+                            <line x1="50" y1="40" x2="450" y2="40" />
+                            <line x1="50" y1="90" x2="450" y2="90" />
+                            <line x1="50" y1="140" x2="450" y2="140" />
+                            <line x1="50" y1="190" x2="450" y2="190" />
+                            <line x1="100" y1="30" x2="100" y2="200" />
+                            <line x1="200" y1="30" x2="200" y2="200" />
+                            <line x1="300" y1="30" x2="300" y2="200" />
+                            <line x1="400" y1="30" x2="400" y2="200" />
                         </g>
-                        <path class="chart-area" d="M0,180 L50,160 L100,140 L150,120 L200,100 L250,110 L300,90 L350,70 L400,60 L400,200 L0,200 Z" fill="url(#areaGradient)" />
-                        <path class="chart-line" d="M0,180 L50,160 L100,140 L150,120 L200,100 L250,110 L300,90 L350,70 L400,60" />
+                        
+                        <!-- Y-axis labels (values) -->
+                        <g class="chart-axis">
+                            <text x="45" y="45" text-anchor="end">$4,200</text>
+                            <text x="45" y="95" text-anchor="end">$4,000</text>
+                            <text x="45" y="145" text-anchor="end">$3,800</text>
+                            <text x="45" y="195" text-anchor="end">$3,600</text>
+                        </g>
+                        
+                        <!-- X-axis labels (dates) -->
+                        <g class="chart-axis">
+                            <text x="100" y="220" text-anchor="middle">Jan 2024</text>
+                            <text x="200" y="220" text-anchor="middle">Apr 2024</text>
+                            <text x="300" y="220" text-anchor="middle">Jul 2024</text>
+                            <text x="400" y="220" text-anchor="middle">Oct 2024</text>
+                        </g>
+                        
+                        <!-- Chart area fill -->
+                        <path class="chart-area" d="M50,180 L100,160 L150,140 L200,120 L250,100 L300,110 L350,90 L400,70 L450,60 L450,200 L50,200 Z" fill="url(#areaGradient)" />
+                        
+                        <!-- Chart line -->
+                        <path class="chart-line" d="M50,180 L100,160 L150,140 L200,120 L250,100 L300,110 L350,90 L400,70 L450,60" />
+                        
+                        <!-- Data points -->
+                        <circle class="chart-point" cx="50" cy="180" r="3" />
+                        <circle class="chart-point" cx="100" cy="160" r="3" />
+                        <circle class="chart-point" cx="150" cy="140" r="3" />
+                        <circle class="chart-point" cx="200" cy="120" r="3" />
+                        <circle class="chart-point" cx="250" cy="100" r="3" />
+                        <circle class="chart-point" cx="300" cy="110" r="3" />
+                        <circle class="chart-point" cx="350" cy="90" r="3" />
+                        <circle class="chart-point" cx="400" cy="70" r="3" />
+                        <circle class="chart-point" cx="450" cy="60" r="3" />
                     </svg>
                 </div>
             </div>
@@ -481,12 +645,7 @@
             { name: 'HKEX', timezone: 'Asia/Hong_Kong', openTime: '09:30', closeTime: '16:00' }
         ];
 
-        const stocks = [
-            { symbol: 'AAPL', name: 'Apple Inc.', price: 175.43, change: 2.15, shares: 10 },
-            { symbol: 'GOOGL', name: 'Alphabet Inc.', price: 2847.63, change: -15.32, shares: 5 },
-            { symbol: 'MSFT', name: 'Microsoft Corp.', price: 378.85, change: 5.21, shares: 8 },
-            { symbol: 'TSLA', name: 'Tesla Inc.', price: 248.50, change: -8.75, shares: 3 }
-        ];
+        const stocks = [];
 
         const exchangeRates = {
             'USD': { 'EUR': 0.85, 'GBP': 0.73, 'JPY': 110, 'SGD': 1.35 },
@@ -558,7 +717,17 @@
             const stocksList = document.getElementById('stocks-list');
             stocksList.innerHTML = '';
             
-            stocks.forEach(stock => {
+            if (stocks.length === 0) {
+                stocksList.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No stocks added yet</h3>
+                        <p>Start by adding your first stock using the form above</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            stocks.forEach((stock, index) => {
                 const stockItem = document.createElement('div');
                 stockItem.className = 'stock-item';
                 
@@ -568,19 +737,28 @@
                         <div class="stock-name">${stock.name}</div>
                     </div>
                     <div class="stock-price">
-                        <div>$${stock.price.toFixed(2)}</div>
+                        <div>${stock.price.toFixed(2)}</div>
                         <div class="stock-change ${stock.change >= 0 ? 'positive' : 'negative'}">
                             ${stock.change >= 0 ? '+' : ''}${stock.change.toFixed(2)}
                         </div>
                     </div>
                     <div style="text-align: right;">
                         <div>Shares: ${stock.shares}</div>
-                        <div style="font-weight: bold;">$${(stock.price * stock.shares).toFixed(2)}</div>
+                        <div style="font-weight: bold;">${(stock.price * stock.shares).toFixed(2)}</div>
+                        <button class="delete-btn" onclick="deleteStock(${index})">Sell</button>
                     </div>
                 `;
                 
                 stocksList.appendChild(stockItem);
             });
+        }
+
+        function deleteStock(index) {
+            if (confirm(`Are you sure you want to sell ${stocks[index].symbol}?`)) {
+                stocks.splice(index, 1);
+                updateStocksList();
+                updatePortfolioSummary();
+            }
         }
 
         function convertCurrency() {
