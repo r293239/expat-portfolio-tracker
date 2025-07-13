@@ -4,136 +4,1054 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌍 Expat Portfolio Tracker</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            opacity: 0.9;
+        }
+
+        .market-status-section, .portfolio-section, .features-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .market-status-section h2, .portfolio-section h2, .features-section h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-size: 1.8rem;
+        }
+
+        .markets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .market-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #3498db;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .market-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .market-card.open {
+            border-left-color: #27ae60;
+        }
+
+        .market-card.closed {
+            border-left-color: #e74c3c;
+        }
+
+        .market-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .market-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e74c3c;
+        }
+
+        .status-indicator.open {
+            background: #27ae60;
+        }
+
+        .market-time {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .portfolio-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn.primary {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+        }
+
+        .btn.primary:hover {
+            background: linear-gradient(45deg, #2980b9, #1f5f8b);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn.secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn.secondary:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+        }
+
+        select {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            transition: border-color 0.3s ease;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .portfolio-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #9b59b6;
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .portfolio-item h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .portfolio-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .portfolio-details span {
+            color: #7f8c8d;
+        }
+
+        .portfolio-details strong {
+            color: #2c3e50;
+        }
+
+        .profit-positive {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .profit-negative {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .feature-card p {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 25px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .modal-content input {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .modal-content input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 15px;
+            color: #95a5a6;
+        }
+
+        .portfolio-summary {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #f39c12;
+        }
+
+        .portfolio-summary h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .summary-item {
+            text-align: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .summary-item span {
+            display: block;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+
+        .summary-item strong {
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+
+        .refresh-indicator {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .portfolio-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .markets-grid, .portfolio-grid, .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .portfolio-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>🌍 Expat Portfolio Tracker</h1>
-            <p>Track your international investments across multiple currencies</p>
+            <p>Track your international investments across multiple markets and currencies</p>
         </header>
 
         <main>
-            <section class="dashboard">
-                <div class="card">
-                    <h2>Portfolio Overview</h2>
-                    <div class="stats">
-                        <div class="stat-item">
-                            <span class="label">Total Value (USD)</span>
-                            <span class="value" id="total-usd">$0.00</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="label">Total Value (Local)</span>
-                            <span class="value" id="total-local">$0.00</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="label">Today's Change</span>
-                            <span class="value" id="daily-change">$0.00</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2>Currency Settings</h2>
-                    <div class="currency-selector">
-                        <label for="base-currency">Base Currency:</label>
-                        <select id="base-currency">
-                            <option value="USD">USD - US Dollar</option>
-                            <option value="EUR">EUR - Euro</option>
-                            <option value="GBP">GBP - British Pound</option>
-                            <option value="JPY">JPY - Japanese Yen</option>
-                            <option value="AUD">AUD - Australian Dollar</option>
-                            <option value="CAD">CAD - Canadian Dollar</option>
-                            <option value="CHF">CHF - Swiss Franc</option>
-                            <option value="CNY">CNY - Chinese Yuan</option>
-                            <option value="SGD">SGD - Singapore Dollar</option>
-                            <option value="HKD">HKD - Hong Kong Dollar</option>
-                        </select>
-                    </div>
+            <!-- Market Status Section -->
+            <section class="market-status-section">
+                <h2>📊 Global Market Status</h2>
+                <div class="markets-grid" id="marketsGrid">
+                    <!-- Market cards will be populated here -->
                 </div>
             </section>
 
+            <!-- Portfolio Section -->
             <section class="portfolio-section">
-                <div class="card">
-                    <div class="section-header">
-                        <h2>Your Holdings</h2>
-                        <button id="add-holding-btn" class="btn btn-primary">+ Add Holding</button>
+                <h2>💼 Your Portfolio</h2>
+                <div class="portfolio-controls">
+                    <button id="addStockBtn" class="btn primary">Add Stock</button>
+                    <button id="sampleDataBtn" class="btn secondary">Add Sample Data</button>
+                    <select id="baseCurrency">
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                        <option value="JPY">JPY</option>
+                        <option value="SGD">SGD</option>
+                        <option value="HKD">HKD</option>
+                    </select>
+                </div>
+                
+                <div id="portfolioSummary" class="portfolio-summary" style="display: none;">
+                    <h3>Portfolio Summary</h3>
+                    <div class="summary-grid" id="summaryGrid">
+                        <!-- Summary items will be populated here -->
                     </div>
-                    
-                    <div class="holdings-list" id="holdings-list">
-                        <!-- Holdings will be populated here -->
+                </div>
+                
+                <div class="portfolio-grid" id="portfolioGrid">
+                    <!-- Portfolio items will be populated here -->
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features-section">
+                <h2>🚀 Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>Multi-Currency Support</h3>
+                        <p>Track investments in multiple currencies with real-time conversion rates</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Global Markets</h3>
+                        <p>Monitor market status across different time zones worldwide</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Real-time Updates</h3>
+                        <p>Get live updates on your portfolio performance and market conditions</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Profit/Loss Tracking</h3>
+                        <p>Detailed analytics on your investment gains and losses</p>
                     </div>
                 </div>
             </section>
         </main>
 
-        <!-- Add Holding Modal -->
-        <div id="add-holding-modal" class="modal">
+        <!-- Add Stock Modal -->
+        <div id="addStockModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <h3>Add New Holding</h3>
-                <form id="add-holding-form">
-                    <div class="form-group">
-                        <label for="holding-symbol">Symbol/Ticker:</label>
-                        <input type="text" id="holding-symbol" required placeholder="e.g., AAPL, MSFT">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="holding-name">Name:</label>
-                        <input type="text" id="holding-name" required placeholder="e.g., Apple Inc.">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="holding-quantity">Quantity:</label>
-                        <input type="number" id="holding-quantity" step="0.01" required placeholder="0.00">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="holding-price">Purchase Price:</label>
-                        <input type="number" id="holding-price" step="0.01" required placeholder="0.00">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="holding-currency">Currency:</label>
-                        <select id="holding-currency" required>
-                            <option value="USD">USD</option>
-                            <option value="EUR">EUR</option>
-                            <option value="GBP">GBP</option>
-                            <option value="JPY">JPY</option>
-                            <option value="AUD">AUD</option>
-                            <option value="CAD">CAD</option>
-                            <option value="CHF">CHF</option>
-                            <option value="CNY">CNY</option>
-                            <option value="SGD">SGD</option>
-                            <option value="HKD">HKD</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="holding-market">Market:</label>
-                        <select id="holding-market" required>
-                            <option value="US">US - United States</option>
-                            <option value="EU">EU - European Union</option>
-                            <option value="UK">UK - United Kingdom</option>
-                            <option value="JP">JP - Japan</option>
-                            <option value="AU">AU - Australia</option>
-                            <option value="CA">CA - Canada</option>
-                            <option value="CH">CH - Switzerland</option>
-                            <option value="CN">CN - China</option>
-                            <option value="SG">SG - Singapore</option>
-                            <option value="HK">HK - Hong Kong</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" id="cancel-btn">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Add Holding</button>
-                    </div>
+                <h2>Add New Stock</h2>
+                <form id="addStockForm">
+                    <input type="text" id="stockSymbol" placeholder="Stock Symbol (e.g., AAPL)" required>
+                    <input type="number" id="stockQuantity" placeholder="Quantity" step="0.01" required>
+                    <input type="number" id="stockPrice" placeholder="Purchase Price" step="0.01" required>
+                    <select id="stockCurrency" required>
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                        <option value="JPY">JPY</option>
+                        <option value="SGD">SGD</option>
+                        <option value="HKD">HKD</option>
+                    </select>
+                    <button type="submit" class="btn primary">Add Stock</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Global Markets Configuration
+        const MARKETS = {
+            NYSE: {
+                name: 'New York Stock Exchange',
+                timezone: 'America/New_York',
+                country: '🇺🇸',
+                hours: [
+                    { start: '09:30', end: '16:00' }
+                ],
+                weekdays: [1, 2, 3, 4, 5]
+            },
+            NASDAQ: {
+                name: 'NASDAQ',
+                timezone: 'America/New_York',
+                country: '🇺🇸',
+                hours: [
+                    { start: '09:30', end: '16:00' }
+                ],
+                weekdays: [1, 2, 3, 4, 5]
+            },
+            LSE: {
+                name: 'London Stock Exchange',
+                timezone: 'Europe/London',
+                country: '🇬🇧',
+                hours: [
+                    { start: '08:00', end: '16:30' }
+                ],
+                weekdays: [1, 2, 3, 4, 5]
+            },
+            HKEX: {
+                name: 'Hong Kong Exchange',
+                timezone: 'Asia/Hong_Kong',
+                country: '🇭🇰',
+                hours: [
+                    { start: '09:30', end: '12:00' },
+                    { start: '13:00', end: '16:00' }
+                ],
+                weekdays: [1, 2, 3, 4, 5]
+            },
+            TSE: {
+                name: 'Tokyo Stock Exchange',
+                timezone: 'Asia/Tokyo',
+                country: '🇯🇵',
+                hours: [
+                    { start: '09:00', end: '11:30' },
+                    { start: '12:30', end: '15:25' }
+                ],
+                weekdays: [1, 2, 3, 4, 5]
+            },
+            SSE: {
+                name: 'Shanghai Stock Exchange',
+                timezone: 'Asia/Shanghai',
+                country: '🇨🇳',
+                hours: [
+                    { start: '09:30', end: '11:30' },
+                    { start: '13:00', end: '14:57' }
+                ],
+                weekdays: [1, 2, 3, 4, 5]
+            }
+        };
+
+        class MarketStatus {
+            constructor() {
+                this.updateInterval = null;
+                this.init();
+            }
+
+            init() {
+                this.updateMarketStatus();
+                this.updateInterval = setInterval(() => {
+                    this.updateMarketStatus();
+                }, 30000);
+            }
+
+            isMarketOpen(marketKey) {
+                const market = MARKETS[marketKey];
+                if (!market) return false;
+
+                try {
+                    const now = new Date();
+                    const marketTime = new Date(now.toLocaleString("en-US", {timeZone: market.timezone}));
+                    const dayOfWeek = marketTime.getDay();
+                    
+                    if (!market.weekdays.includes(dayOfWeek)) {
+                        return false;
+                    }
+
+                    const currentTime = marketTime.getHours() * 60 + marketTime.getMinutes();
+                    
+                    for (const session of market.hours) {
+                        const [startHour, startMin] = session.start.split(':').map(Number);
+                        const [endHour, endMin] = session.end.split(':').map(Number);
+                        
+                        const startTime = startHour * 60 + startMin;
+                        const endTime = endHour * 60 + endMin;
+                        
+                        if (currentTime >= startTime && currentTime <= endTime) {
+                            return true;
+                        }
+                    }
+                    
+                    return false;
+                } catch (error) {
+                    console.error(`Error checking market status for ${marketKey}:`, error);
+                    return false;
+                }
+            }
+
+            getMarketTime(marketKey) {
+                const market = MARKETS[marketKey];
+                if (!market) return 'N/A';
+
+                try {
+                    const now = new Date();
+                    const marketTime = new Date(now.toLocaleString("en-US", {timeZone: market.timezone}));
+                    
+                    return marketTime.toLocaleTimeString('en-US', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                    });
+                } catch (error) {
+                    console.error(`Error getting market time for ${marketKey}:`, error);
+                    return 'N/A';
+                }
+            }
+
+            getNextSession(marketKey) {
+                const market = MARKETS[marketKey];
+                if (!market) return null;
+
+                try {
+                    const now = new Date();
+                    const marketTime = new Date(now.toLocaleString("en-US", {timeZone: market.timezone}));
+                    const currentTime = marketTime.getHours() * 60 + marketTime.getMinutes();
+                    
+                    for (const session of market.hours) {
+                        const [startHour, startMin] = session.start.split(':').map(Number);
+                        const startTime = startHour * 60 + startMin;
+                        
+                        if (currentTime < startTime) {
+                            return `Opens at ${session.start}`;
+                        }
+                    }
+                    
+                    const firstSession = market.hours[0];
+                    return `Opens tomorrow at ${firstSession.start}`;
+                } catch (error) {
+                    console.error(`Error getting next session for ${marketKey}:`, error);
+                    return null;
+                }
+            }
+
+            updateMarketStatus() {
+                const marketsGrid = document.getElementById('marketsGrid');
+                if (!marketsGrid) return;
+
+                marketsGrid.innerHTML = '';
+
+                Object.entries(MARKETS).forEach(([key, market]) => {
+                    const isOpen = this.isMarketOpen(key);
+                    const marketTime = this.getMarketTime(key);
+                    const nextSession = this.getNextSession(key);
+
+                    const marketCard = document.createElement('div');
+                    marketCard.className = `market-card ${isOpen ? 'open' : 'closed'}`;
+                    
+                    marketCard.innerHTML = `
+                        <h3>${market.country} ${market.name}</h3>
+                        <div class="market-status">
+                            <div class="status-indicator ${isOpen ? 'open' : 'closed'}"></div>
+                            <span>${isOpen ? 'Open' : 'Closed'}</span>
+                        </div>
+                        <div class="market-time">
+                            Local time: ${marketTime}
+                        </div>
+                        ${!isOpen && nextSession ? `<div class="market-time">${nextSession}</div>` : ''}
+                    `;
+                    
+                    marketsGrid.appendChild(marketCard);
+                });
+            }
+
+            destroy() {
+                if (this.updateInterval) {
+                    clearInterval(this.updateInterval);
+                }
+            }
+        }
+
+        class PortfolioManager {
+            constructor() {
+                this.portfolio = [];
+                this.baseCurrency = 'USD';
+                this.exchangeRates = {
+                    USD: 1.0,
+                    EUR: 0.85,
+                    GBP: 0.73,
+                    JPY: 110.0,
+                    SGD: 1.35,
+                    HKD: 7.8
+                };
+                this.priceUpdateInterval = null;
+                this.init();
+            }
+
+            init() {
+                this.loadPortfolio();
+                this.setupEventListeners();
+                this.updatePortfolioDisplay();
+                this.startPriceUpdates();
+            }
+
+            setupEventListeners() {
+                const addStockBtn = document.getElementById('addStockBtn');
+                const sampleDataBtn = document.getElementById('sampleDataBtn');
+                const addStockModal = document.getElementById('addStockModal');
+                const closeModal = document.querySelector('.close');
+                const addStockForm = document.getElementById('addStockForm');
+                const baseCurrencySelect = document.getElementById('baseCurrency');
+
+                if (addStockBtn) {
+                    addStockBtn.addEventListener('click', () => {
+                        addStockModal.style.display = 'block';
+                    });
+                }
+
+                if (sampleDataBtn) {
+                    sampleDataBtn.addEventListener('click', () => {
+                        this.addSampleData();
+                    });
+                }
+
+                if (closeModal) {
+                    closeModal.addEventListener('click', () => {
+                        addStockModal.style.display = 'none';
+                    });
+                }
+
+                if (addStockModal) {
+                    addStockModal.addEventListener('click', (e) => {
+                        if (e.target === addStockModal) {
+                            addStockModal.style.display = 'none';
+                        }
+                    });
+                }
+
+                if (addStockForm) {
+                    addStockForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.addStock();
+                    });
+                }
+
+                if (baseCurrencySelect) {
+                    baseCurrencySelect.addEventListener('change', (e) => {
+                        this.baseCurrency = e.target.value;
+                        this.updatePortfolioDisplay();
+                    });
+                }
+            }
+
+            addStock() {
+                const symbol = document.getElementById('stockSymbol').value.toUpperCase();
+                const quantity = parseFloat(document.getElementById('stockQuantity').value);
+                const price = parseFloat(document.getElementById('stockPrice').value);
+                const currency = document.getElementById('stockCurrency').value;
+
+                if (!symbol || !quantity || !price) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+
+                const stock = {
+                    id: Date.now(),
+                    symbol,
+                    quantity,
+                    purchasePrice: price,
+                    currency,
+                    currentPrice: this.generateRandomPrice(price),
+                    dateAdded: new Date().toISOString()
+                };
+
+                this.portfolio.push(stock);
+                this.savePortfolio();
+                this.updatePortfolioDisplay();
+                
+                document.getElementById('addStockModal').style.display = 'none';
+                document.getElementById('addStockForm').reset();
+            }
+
+            generateRandomPrice(basePrice) {
+                const variation = (Math.random() - 0.5) * 0.2;
+                return basePrice * (1 + variation);
+            }
+
+            startPriceUpdates() {
+                this.priceUpdateInterval = setInterval(() => {
+                    this.portfolio.forEach(stock => {
+                        const volatility = 0.02;
+                        const change = (Math.random() - 0.5) * volatility;
+                        stock.currentPrice = Math.max(0.01, stock.currentPrice * (1 + change));
+                    });
+                    this.updatePortfolioDisplay();
+                }, 5000);
+            }
+
+            convertCurrency(amount, fromCurrency, toCurrency) {
+                if (fromCurrency === toCurrency) return amount;
+                
+                const usdAmount = amount / this.exchangeRates[fromCurrency];
+                return usdAmount * this.exchangeRates[toCurrency];
+            }
+
+            calculateProfitLoss(stock) {
+                const currentValue = stock.currentPrice * stock.quantity;
+                const purchaseValue = stock.purchasePrice * stock.quantity;
+                const profitLoss = currentValue - purchaseValue;
+                const profitLossPercentage = (profitLoss / purchaseValue) * 100;
+                
+                return {
+                    absolute: profitLoss,
+                    percentage: profitLossPercentage,
+                    currentValue,
+                    purchaseValue
+                };
+            }
+
+            calculatePortfolioSummary() {
+                if (this.portfolio.length === 0) return null;
+
+                let totalCurrentValue = 0;
+                let totalPurchaseValue = 0;
+                let totalProfitLoss = 0;
+
+                this.portfolio.forEach(stock => {
+                    const profitLoss = this.calculateProfitLoss(stock);
+                    const currentValueInBase = this.convertCurrency(
+                        profitLoss.currentValue, 
+                        stock.currency, 
+                        this.baseCurrency
+                    );
+                    const purchaseValueInBase = this.convertCurrency(
+                        profitLoss.purchaseValue, 
+                        stock.currency, 
+                        this.baseCurrency
+                    );
+                    
+                    totalCurrentValue += currentValueInBase;
+                    totalPurchaseValue += purchaseValueInBase;
+                });
+
+                totalProfitLoss = totalCurrentValue - totalPurchaseValue;
+                const totalProfitLossPercentage = (totalProfitLoss / totalPurchaseValue) * 100;
+
+                return {
+                    totalCurrentValue,
+                    totalPurchaseValue,
+                    totalProfitLoss,
+                    totalProfitLossPercentage,
+                    stockCount: this.portfolio.length
+                };
+            }
+
+            removeStock(stockId) {
+                this.portfolio = this.portfolio.filter(stock => stock.id !== stockId);
+                this.savePortfolio();
+                this.updatePortfolioDisplay();
+            }
+
+            updatePortfolioDisplay() {
+                const portfolioGrid = document.getElementById('portfolioGrid');
+                const portfolioSummary = document.getElementById('portfolioSummary');
+                const summaryGrid = document.getElementById('summaryGrid');
+                
+                if (!portfolioGrid) return;
+
+                if (this.portfolio.length === 0) {
+                    portfolioGrid.innerHTML = `
+                        <div class="empty-state">
+                            <h3>No stocks in portfolio</h3>
+                            <p>Click "Add Stock" to get started tracking your investments</p>
+                        </div>
+                    `;
+                    portfolioSummary.style.display = 'none';
+                    return;
+                }
+
+                // Update summary
+                const summary = this.calculatePortfolioSummary();
+                if (summary && summaryGrid) {
+                    portfolioSummary.style.display = 'block';
+                    const profitLossClass = summary.totalProfitLoss >= 0 ? 'profit-positive' : 'profit-negative';
+                    const profitLossSign = summary.totalProfitLoss >= 0 ? '+' : '';
+                    
+                    summaryGrid.innerHTML = `
+                        <div class="summary-item">
+                            <span>Total Stocks</span>
+                            <strong>${summary.stockCount}</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Current Value</span>
+                            <strong>${summary.totalCurrentValue.toFixed(2)} ${this.baseCurrency}</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Purchase Value</span>
+                            <strong>${summary.totalPurchaseValue.toFixed(2)} ${this.baseCurrency}</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Total P&L</span>
+                            <strong<strong class="${profitLossClass}">${profitLossSign}${summary.totalProfitLoss.toFixed(2)} ${this.baseCurrency}</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Total P&L %</span>
+                            <strong class="${profitLossClass}">${profitLossSign}${summary.totalProfitLossPercentage.toFixed(2)}%</strong>
+                        </div>
+                    `;
+                }
+
+                // Update portfolio items
+                portfolioGrid.innerHTML = this.portfolio.map(stock => {
+                    const profitLoss = this.calculateProfitLoss(stock);
+                    const profitLossClass = profitLoss.absolute >= 0 ? 'profit-positive' : 'profit-negative';
+                    const profitLossSign = profitLoss.absolute >= 0 ? '+' : '';
+                    
+                    const currentValueInBase = this.convertCurrency(
+                        profitLoss.currentValue, 
+                        stock.currency, 
+                        this.baseCurrency
+                    );
+                    const purchaseValueInBase = this.convertCurrency(
+                        profitLoss.purchaseValue, 
+                        stock.currency, 
+                        this.baseCurrency
+                    );
+                    const profitLossInBase = this.convertCurrency(
+                        profitLoss.absolute, 
+                        stock.currency, 
+                        this.baseCurrency
+                    );
+                    
+                    return `
+                        <div class="portfolio-item">
+                            <h3>${stock.symbol}</h3>
+                            <div class="portfolio-details">
+                                <span>Quantity:</span>
+                                <strong>${stock.quantity}</strong>
+                                
+                                <span>Purchase Price:</span>
+                                <strong>${stock.purchasePrice.toFixed(2)} ${stock.currency}</strong>
+                                
+                                <span>Current Price:</span>
+                                <strong>${stock.currentPrice.toFixed(2)} ${stock.currency}</strong>
+                                
+                                <span>Current Value:</span>
+                                <strong>${currentValueInBase.toFixed(2)} ${this.baseCurrency}</strong>
+                                
+                                <span>Purchase Value:</span>
+                                <strong>${purchaseValueInBase.toFixed(2)} ${this.baseCurrency}</strong>
+                                
+                                <span>P&L:</span>
+                                <strong class="${profitLossClass}">${profitLossSign}${profitLossInBase.toFixed(2)} ${this.baseCurrency}</strong>
+                                
+                                <span>P&L %:</span>
+                                <strong class="${profitLossClass}">${profitLossSign}${profitLoss.percentage.toFixed(2)}%</strong>
+                                
+                                <span>Currency:</span>
+                                <strong>${stock.currency}</strong>
+                            </div>
+                            <button onclick="portfolioManager.removeStock(${stock.id})" class="btn secondary" style="margin-top: 15px; width: 100%;">Remove</button>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            addSampleData() {
+                const sampleStocks = [
+                    {
+                        id: Date.now() + 1,
+                        symbol: 'AAPL',
+                        quantity: 10,
+                        purchasePrice: 150.00,
+                        currency: 'USD',
+                        currentPrice: 155.50,
+                        dateAdded: new Date().toISOString()
+                    },
+                    {
+                        id: Date.now() + 2,
+                        symbol: 'GOOGL',
+                        quantity: 5,
+                        purchasePrice: 2800.00,
+                        currency: 'USD',
+                        currentPrice: 2750.00,
+                        dateAdded: new Date().toISOString()
+                    },
+                    {
+                        id: Date.now() + 3,
+                        symbol: 'ASML',
+                        quantity: 2,
+                        purchasePrice: 650.00,
+                        currency: 'EUR',
+                        currentPrice: 680.00,
+                        dateAdded: new Date().toISOString()
+                    },
+                    {
+                        id: Date.now() + 4,
+                        symbol: 'TSLA',
+                        quantity: 8,
+                        purchasePrice: 200.00,
+                        currency: 'USD',
+                        currentPrice: 195.00,
+                        dateAdded: new Date().toISOString()
+                    }
+                ];
+
+                this.portfolio = [...this.portfolio, ...sampleStocks];
+                this.savePortfolio();
+                this.updatePortfolioDisplay();
+            }
+
+            savePortfolio() {
+                // Note: In a real application, you would save to a backend service
+                // For demo purposes, we'll just keep it in memory
+                console.log('Portfolio saved:', this.portfolio);
+            }
+
+            loadPortfolio() {
+                // Note: In a real application, you would load from a backend service
+                // For demo purposes, we'll start with an empty portfolio
+                this.portfolio = [];
+            }
+
+            destroy() {
+                if (this.priceUpdateInterval) {
+                    clearInterval(this.priceUpdateInterval);
+                }
+            }
+        }
+
+        // Initialize the application
+        let marketStatus;
+        let portfolioManager;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            marketStatus = new MarketStatus();
+            portfolioManager = new PortfolioManager();
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (marketStatus) {
+                marketStatus.destroy();
+            }
+            if (portfolioManager) {
+                portfolioManager.destroy();
+            }
+        });
+    </script>
 </body>
 </html>
