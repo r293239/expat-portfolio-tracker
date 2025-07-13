@@ -4,12 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌍 Expat Portfolio Tracker</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- All the HTML content from the first artifact -->
-    <script src="js/markets.js"></script>
-    <script src="js/portfolio.js"></script>
-    <script src="js/main.js"></script>
+    <div class="container">
+        <header>
+            <h1>🌍 Expat Portfolio Tracker</h1>
+            <p>Track your international investments across multiple currencies</p>
+        </header>
+
+        <main>
+            <section class="dashboard">
+                <div class="card">
+                    <h2>Portfolio Overview</h2>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="label">Total Value (USD)</span>
+                            <span class="value" id="total-usd">$0.00</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="label">Total Value (Local)</span>
+                            <span class="value" id="total-local">$0.00</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="label">Today's Change</span>
+                            <span class="value" id="daily-change">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Currency Settings</h2>
+                    <div class="currency-selector">
+                        <label for="base-currency">Base Currency:</label>
+                        <select id="base-currency">
+                            <option value="USD">USD - US Dollar</option>
+                            <option value="EUR">EUR - Euro</option>
+                            <option value="GBP">GBP - British Pound</option>
+                            <option value="JPY">JPY - Japanese Yen</option>
+                            <option value="AUD">AUD - Australian Dollar</option>
+                            <option value="CAD">CAD - Canadian Dollar</option>
+                            <option value="CHF">CHF - Swiss Franc</option>
+                            <option value="CNY">CNY - Chinese Yuan</option>
+                            <option value="SGD">SGD - Singapore Dollar</option>
+                            <option value="HKD">HKD - Hong Kong Dollar</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <section class="portfolio-section">
+                <div class="card">
+                    <div class="section-header">
+                        <h2>Your Holdings</h2>
+                        <button id="add-holding-btn" class="btn btn-primary">+ Add Holding</button>
+                    </div>
+                    
+                    <div class="holdings-list" id="holdings-list">
+                        <!-- Holdings will be populated here -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Add Holding Modal -->
+        <div id="add-holding-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Add New Holding</h3>
+                <form id="add-holding-form">
+                    <div class="form-group">
+                        <label for="holding-symbol">Symbol/Ticker:</label>
+                        <input type="text" id="holding-symbol" required placeholder="e.g., AAPL, MSFT">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="holding-name">Name:</label>
+                        <input type="text" id="holding-name" required placeholder="e.g., Apple Inc.">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="holding-quantity">Quantity:</label>
+                        <input type="number" id="holding-quantity" step="0.01" required placeholder="0.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="holding-price">Purchase Price:</label>
+                        <input type="number" id="holding-price" step="0.01" required placeholder="0.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="holding-currency">Currency:</label>
+                        <select id="holding-currency" required>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="JPY">JPY</option>
+                            <option value="AUD">AUD</option>
+                            <option value="CAD">CAD</option>
+                            <option value="CHF">CHF</option>
+                            <option value="CNY">CNY</option>
+                            <option value="SGD">SGD</option>
+                            <option value="HKD">HKD</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="holding-market">Market:</label>
+                        <select id="holding-market" required>
+                            <option value="US">US - United States</option>
+                            <option value="EU">EU - European Union</option>
+                            <option value="UK">UK - United Kingdom</option>
+                            <option value="JP">JP - Japan</option>
+                            <option value="AU">AU - Australia</option>
+                            <option value="CA">CA - Canada</option>
+                            <option value="CH">CH - Switzerland</option>
+                            <option value="CN">CN - China</option>
+                            <option value="SG">SG - Singapore</option>
+                            <option value="HK">HK - Hong Kong</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancel-btn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Holding</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
