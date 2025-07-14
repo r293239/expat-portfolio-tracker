@@ -1283,6 +1283,71 @@
             }
         }, 300000); // 5 minutes
     </script>
+<div id="top-gainer" style="padding: 10px; border: 2px solid green; margin-top: 20px;">
+  <h3>📈 Top Gainer</h3>
+  <p>Loading...</p>
+</div>
+<script>
+const symbols = ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA"];
+const apiKey = "XRKGOK20Q9NH80H8"; // your Alpha Vantage key
+const cacheKey = "topGainerCache";
+
+const today = new Date().toISOString().split("T")[0];
+const cached = JSON.parse(localStorage.getItem(cacheKey));
+
+if (cached && cached.date === today) {
+  updateTopGainer(cached.stock);
+} else {
+  let topStock = null;
+  let maxGain = -Infinity;
+  let completed = 0;
+
+  symbols.forEach((symbol, index) => {
+    setTimeout(() => {
+      fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${symbol}&apikey=${apiKey}`)
+        .then(res => res.json())
+        .then(data => {
+          const ts = data["Time Series (Daily)"];
+          if (!ts) return;
+
+          const dates = Object.keys(ts);
+          const todayData = ts[dates[0]];
+          const yesterdayData = ts[dates[1]];
+          if (!todayData || !yesterdayData) return;
+
+          const closeToday = parseFloat(todayData["4. close"]);
+          const closeYesterday = parseFloat(yesterdayData["4. close"]);
+          const gain = ((closeToday - closeYesterday) / closeYesterday) * 100;
+
+          if (gain > maxGain) {
+            maxGain = gain;
+            topStock = {
+              symbol,
+              price: closeToday.toFixed(2),
+              gain: gain.toFixed(2)
+            };
+          }
+
+          completed++;
+          if (completed === symbols.length && topStock) {
+            localStorage.setItem(cacheKey, JSON.stringify({ date: today, stock: topStock }));
+            updateTopGainer(topStock);
+          }
+        });
+    }, index * 15000); // 15 sec delay per request to avoid rate limit
+  });
+}
+
+function updateTopGainer(stock) {
+  const container = document.getElementById("top-gainer");
+  container.innerHTML = `
+    <h3>📈 Top Gainer: ${stock.symbol}</h3>
+    <p>Price: $${stock.price}</p>
+    <p>Daily Gain: ${stock.gain}%</p>
+    <small>Last updated: ${new Date().toLocaleDateString()}</small>
+  `;
+}
+</script>
 
     <!-- Initialize Google AdSense -->
     <script>
